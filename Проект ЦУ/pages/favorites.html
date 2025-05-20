@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Избранные слова</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header>
+    <h1><a href="./index.html">SoyLash</a></h1>
+    <button class="btn-outline" onclick="window.location.href='wordLearning.html'">Назад к изучению</button>
+</header>
+
+<main class="main-container">
+    <div class="favorites-container">
+        <!-- Блок фильтров слева -->
+        <aside class="filters-section">
+            <div class="filters">
+                <h2>Фильтры</h2>
+                <ul class="theme-filter" id="theme-filters">
+                    <li><button class="active" data-theme="all">Все темы</button></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Основной контент справа -->
+        <section class="favorites-section">
+            <div class="favorites-header">
+                <h2>Избранные слова</h2>
+                <span class="favorites-count">0 слов</span>
+            </div>
+
+            <div id="favorites-list" class="favorites-grid">
+                <!-- Здесь будут карточки избранных слов -->
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="../js/favorites.js"></script>
+</body>
+</html>

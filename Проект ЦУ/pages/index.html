@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Главная</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/unsplash-js@7.0.15/dist/unsplash-js.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1><a href="./index.html">SoyLash</a></h1>
+        <p class="subtitle">Интерактивная платформа для изучения татарского языка</p>
+    </header>
+
+    <main>
+        <div class="main-grid">
+            <!-- Основные разделы -->
+            <div class="section-card" onclick="location.href='wordLearning.html'">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Изучение слов</h2>
+                <p class="card-desc">Изучайте новые слова с транскрипцией, переводом и примерами</p>
+            </div>
+
+            <div class="section-card" onclick="location.href='favorites.html'">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Избранное</h2>
+                <p class="card-desc">Ваша коллекция сохраненных слов для повторения</p>
+            </div>
+
+            <div class="section-card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Проверка знаний</h2>
+                <p class="card-desc">Тесты и упражнения для закрепления материала</p>
+
+                <!-- Подразделы квизов -->
+                <div class="quiz-grid">
+                    <div class="quiz-card" onclick="location.href='WordQuiz.html'">
+                        <h3 class="quiz-title">Угадай перевод</h3>
+                        <p class="quiz-desc">Выберите правильный перевод слова</p>
+                    </div>
+                    <div class="quiz-card">
+                        <h3 class="quiz-title">Аудирование</h3>
+                        <p class="quiz-desc">Слушайте и определяйте слово</p>
+                    </div>
+                    <div class="quiz-card">
+                        <h3 class="quiz-title">Картинка</h3>
+                        <p class="quiz-desc">Выберите слово, соответствующее изображению</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2023 TatarLearn. Все права защищены.</p>
+    </footer>
+</div>
+</body>
+</html>

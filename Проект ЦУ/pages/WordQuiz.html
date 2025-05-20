@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Угадай перевод</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header>
+    <h1><a href="./index.html">SoyLash</a></h1>
+    <button class="btn-outline" onclick="window.location.href='wordLearning.html'">Назад к изучению</button>
+</header>
+
+<main class="main-container">
+    <div class="quiz-card">
+        <h2 class="quiz-title">Угадай перевод</h2>
+        <p class="quiz-desc">Выберите правильный перевод слова</p>
+
+        <div class="quiz-content">
+            <div class="quiz-word">
+                <h3 id="quiz-word-text">Слово</h3>
+                <div id="quiz-word-transcription" class="transcription">[транскрипция]</div>
+            </div>
+
+            <div class="quiz-options" id="quiz-options">
+                <!-- Варианты ответов будут здесь -->
+            </div>
+
+            <div class="quiz-feedback" id="quiz-feedback">
+                <!-- Обратная связь будет здесь -->
+            </div>
+
+            <button id="next-quiz-btn" class="btn-primary" style="display: none;">Следующее слово</button>
+        </div>
+    </div>
+</main>
+
+<script src="../js/WordQuiz.js"></script>
+</body>
+</html>

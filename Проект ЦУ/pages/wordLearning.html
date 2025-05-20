@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Изучаем татарский язык</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/unsplash-js@7.0.15/dist/unsplash-js.min.js"></script>
+</head>
+<body>
+<header>
+    <h1><a href="./index.html">SoyLash</a></h1>
+    <button class="btn-outline"><a href="./favorites.html">Избранное</a></button>
+</header>
+
+<div class="main-container">
+    <aside class="filters">
+        <h2>Темы</h2>
+        <ul class="theme-filter">
+            <!-- Фильтры будут добавляться динамически -->
+        </ul>
+    </aside>
+
+    <main>
+        <div class="word-card">
+            <img src="https://source.unsplash.com/random/600x400/?food" alt="Изображение слова" class="word-image">
+
+            <div class="word-header">
+                <div>
+                    <h2 class="word-title">Сүз</h2>
+                    <div class="transcription">[syz]</div>
+                    <span class="word-theme">Еда</span>
+                </div>
+                <div class="word-actions-header">
+                    <button class="favorite-btn btn-outline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        В избранное
+                    </button>
+                </div>
+            </div>
+
+            <div class="word-translation">Слово</div>
+            <p class="word-description">Основная единица языка, служащая для именования понятий, предметов, лиц, действий, состояний, признаков, связей, отношений, оценок.</p>
+
+            <div class="word-actions">
+                <button class="btn-primary">Следующее слово</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/wordLearning.js"></script>
+</body>
+</html>
