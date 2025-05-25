@@ -14,33 +14,51 @@
         <nav>
             <ul class="main-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Изучение <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                    <a href="#" class="dropdown-toggle">Обучение<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
                     <ul class="dropdown-menu">
-                        <li><a href="wordLearning.html">Слова</a></li>
-                        <li><a href="phraseLearning.html">Фразы</a></li>
+                        <li><a href="wordLearning.html">Тренировка произношения</a></li>
+                        <li><a href="WordSpelling.html">Проверка произношения (ручной ввод)</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Избранное <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="favorites.html">Слова</a></li>
-                        <li><a href="favoritesPhrases.html">Фразы</a></li>
-                    </ul>
+                <li>
+                    <a href="favorites.html" class="dropdown-toggle">Избранное</a>
+                </li>
+                <li>
+                    <a href="translator.html" class="dropdown-toggle">Переводчик</a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
                     <ul class="dropdown-menu">
-                        <li><a href="WordQuiz.html">Угадай слово</a></li>
+                        <li><a href="WordQuiz.html">Угадай перевод</a></li>
+                        <li><a href="ImageQuiz.html">Угадай что на картинке</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a href="translator.html" class="dropdown-toggle">Переводчик</a>
                 </li>
             </ul>
         </nav>
     </header>
 
     <main>
+        <div class="progress-container">
+            <div class="progress-card">
+                <div class="progress-header">
+                    <h3>Прогресс изучения слов</h3>
+                    <span id="words-progress-value">0/0</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="words-progress-bar" class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="progress-card">
+                <div class="progress-header">
+                    <h3>Прогресс квизов</h3>
+                    <span id="quizzes-progress-value">0/0</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="quizzes-progress-bar" class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
         <h2 class="section-title">Основные разделы</h2>
         <div class="main-grid">
             <!-- Основные разделы -->
@@ -55,34 +73,14 @@
                 <p class="card-desc">Изучайте татарские слова с переводом и примерами</p>
             </a>
 
-            <a href="phraseLearning.html" class="section-card">
-                <div class="card-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </div>
-                <h3 class="card-title">Изучение фраз</h3>
-                <p class="card-desc">Популярные татарские фразы для повседневного общения</p>
-            </a>
-
             <a href="favorites.html" class="section-card">
                 <div class="card-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                 </div>
-                <h3 class="card-title">Избранные слова</h3>
+                <h3 class="card-title">Избранное</h3>
                 <p class="card-desc">Ваша коллекция сохраненных слов для повторения</p>
-            </a>
-
-            <a href="favoritesPhrases.html" class="section-card">
-                <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                </div>
-                <h3 class="card-title">Избранные фразы</h3>
-                <p class="card-desc">Ваша коллекция сохраненных фраз для повторения</p>
             </a>
 
             <a href="translator.html" class="section-card">
@@ -108,13 +106,23 @@
                 <h3 class="card-title">Угадай перевод</h3>
                 <p class="card-desc">Выберите правильный перевод слова</p>
             </a>
-
+            <a href="ImageQuiz.html" class="section-card">
+                <div class="card-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 9l4-4 4 4"></path>
+                        <path d="M16 15l-4 4-4-4"></path>
+                    </svg>
+                </div>
+                <h3 class="card-title">Угадай что на картинке</h3>
+                <p class="card-desc">Выберите правильное слово</p>
+            </a>
         </div>
     </main>
 
     <footer>
         <p>© 2023 TatarLearn. Все права защищены.</p>
     </footer>
+    <script src="../js/progress.js"></script>
 </div>
 </body>
 </html>

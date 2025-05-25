@@ -11,8 +11,7 @@ const quizStart = document.getElementById('quiz-start');
 const quizProgress = document.getElementById('quiz-progress');
 const quizContent = document.getElementById('quiz-content');
 const quizResults = document.getElementById('quiz-results');
-const quizWordText = document.getElementById('quiz-word-text');
-const quizWordTranscription = document.getElementById('quiz-word-transcription');
+const quizImage = document.getElementById('quiz-image');
 const quizOptions = document.getElementById('quiz-options');
 const quizFeedback = document.getElementById('quiz-feedback');
 const nextQuizBtn = document.getElementById('next-quiz-btn');
@@ -38,7 +37,8 @@ async function loadData() {
                 partOfSpeech: partOfSpeech.trim(),
                 translation: translation.trim(),
                 example: example ? example.trim() : '',
-                theme: getThemeByPartOfSpeech(partOfSpeech.trim())
+                theme: getThemeByPartOfSpeech(partOfSpeech.trim()),
+                imageQuery: translation.trim() // Для поиска изображений используем перевод
             };
         }).filter(word => word.word); // Фильтрация пустых строк
     } catch (error) {
@@ -81,27 +81,49 @@ function startQuiz(e) {
     showNextQuestion();
 }
 
-function showNextQuestion() {
+async function showNextQuestion() {
     if (currentQuiz.current > currentQuiz.total) {
         showResults();
         return;
     }
 
     document.getElementById('current-question').textContent = currentQuiz.current;
+
+    // Выбираем случайное слово
     const question = allQuestions[Math.floor(Math.random() * allQuestions.length)];
 
     // Очистка предыдущего состояния
-    quizWordText.textContent = question.word;
-    quizWordTranscription.textContent = `[${question.word.toLowerCase()}]`;
+    quizImage.src = '';
+    quizImage.alt = `Изображение для слова: ${question.translation}`;
     quizOptions.innerHTML = '';
     quizFeedback.innerHTML = '';
     nextQuizBtn.style.display = 'none';
 
-    // Генерация вариантов
-    const options = [question.translation];
+    try {
+        // Загружаем изображение из Unsplash по переводу слова
+        const searchQuery = `${question.translation}`;
+        const response = await fetch(`https://api.unsplash.com/photos/random?query=${encodeURIComponent(searchQuery)}&orientation=landscape&client_id=c0DDTVCG7lctOJTWJIvZ_F6J4ey07hO1MzmKfIgZNrc`);
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data && data.urls && data.urls.regular) {
+                quizImage.src = data.urls.regular;
+            } else {
+                setFallbackImage();
+            }
+        } else {
+            setFallbackImage();
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки изображения:', error);
+        setFallbackImage();
+    }
+
+    // Генерация вариантов ответа
+    const options = [question.word];
     while (options.length < 4) {
         const random = allQuestions[Math.floor(Math.random() * allQuestions.length)];
-        if (!options.includes(random.translation)) options.push(random.translation);
+        if (!options.includes(random.word)) options.push(random.word);
     }
 
     shuffleArray(options).forEach(option => {
@@ -113,13 +135,19 @@ function showNextQuestion() {
     });
 }
 
+function setFallbackImage() {
+    quizImage.src = 'https://images.unsplash.com/photo-1582139329536-e7284fece509?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80';
+    quizImage.alt = 'Татарская культура - изображение по умолчанию';
+}
+
 function checkAnswer(selected, correct) {
-    const isCorrect = selected === correct.translation;
+    const isCorrect = selected === correct.word;
 
     if (isCorrect) {
         currentQuiz.correct++;
     } else {
         currentQuiz.mistakes.push({
+            imageQuery: correct.translation,
             word: correct.word,
             translation: correct.translation,
             description: correct.example
@@ -129,7 +157,7 @@ function checkAnswer(selected, correct) {
     // Подсветка ответов
     document.querySelectorAll('.quiz-option').forEach(btn => {
         btn.disabled = true;
-        btn.classList.toggle('correct', btn.textContent === correct.translation);
+        btn.classList.toggle('correct', btn.textContent === correct.word);
         btn.classList.toggle('incorrect', !isCorrect && btn.textContent === selected);
     });
 
@@ -143,8 +171,9 @@ function showFeedback(isCorrect, question) {
     feedback.className = isCorrect ? 'feedback-correct' : 'feedback-incorrect';
     feedback.innerHTML = `
         <p>${isCorrect ? '✅ Правильно!' : '❌ Неправильно!'}</p>
-        <p><strong>Правильный ответ:</strong> ${question.translation}</p>
-        <p>${question.example || 'Пример использования отсутствует'}</p>
+        <p><strong>Правильный ответ:</strong> ${question.word}</p>
+        <p><strong>Перевод:</strong> ${question.translation}</p>
+        ${question.example ? `<p>Пример: ${question.example}</p>` : ''}
     `;
     quizFeedback.appendChild(feedback);
 }
@@ -162,14 +191,16 @@ function showResults() {
         mistakesList.style.display = 'block';
         mistakesList.innerHTML = currentQuiz.mistakes.map(item => `
             <div class="mistake-item">
-                <p class="mistake-word">${item.word}</p>
-                <p class="mistake-translation"><strong>Правильный перевод:</strong> ${item.translation}</p>
-                <p class="mistake-description">${item.description || 'Пример отсутствует'}</p>
+                <img src="https://source.unsplash.com/random/200x150/?${encodeURIComponent(item.imageQuery)}" alt="${item.translation}" class="mistake-image">
+                <p class="mistake-word"><strong>Слово:</strong> ${item.word}</p>
+                <p class="mistake-translation"><strong>Перевод:</strong> ${item.translation}</p>
+                ${item.description ? `<p class="mistake-description"><strong>Пример:</strong> ${item.description}</p>` : ''}
             </div>
         `).join('');
     } else {
         mistakesList.style.display = 'none';
     }
+
     const completedQuizzes = parseInt(localStorage.getItem('completedQuizzes') || 0);
     localStorage.setItem('completedQuizzes', completedQuizzes + 1);
 }

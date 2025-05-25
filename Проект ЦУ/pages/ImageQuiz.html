@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoyLash - Угадай перевод</title>
+    <title>SoyLash - Угадай что на картинке</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -40,7 +40,7 @@
         <!-- Стартовый экран -->
         <div id="quiz-start">
             <div class="quiz-header">
-                <h2 class="quiz-title">Угадай перевод</h2>
+                <h2 class="quiz-title">Угадай что на картинке</h2>
                 <p class="quiz-subtitle">Выберите количество вопросов для теста</p>
             </div>
             <div class="size-options">
@@ -58,9 +58,8 @@
         <!-- Контент квиза -->
         <div id="quiz-content" style="display: none;">
             <div class="quiz-content">
-                <div class="quiz-word">
-                    <h3 id="quiz-word-text">Слово</h3>
-                    <div id="quiz-word-transcription" class="quiz-word-transcription">[транскрипция]</div>
+                <div class="quiz-image-container">
+                    <img id="quiz-image" src="" alt="Изображение для угадывания" class="quiz-image">
                 </div>
 
                 <div class="quiz-options-grid" id="quiz-options">
@@ -94,6 +93,6 @@
     </div>
 </main>
 
-<script src="../js/WordQuiz.js"></script>
+<script src="../js/ImageQuiz.js"></script>
 </body>
 </html>

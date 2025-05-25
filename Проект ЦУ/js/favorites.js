@@ -32,11 +32,11 @@ function removeFromFavorites(word) {
 
 // Функция для озвучивания слова
 function speakWord(word) {
-    if (!word || !word.speachWord) return;
+    if (!word || !word.word) return;
 
     // Проверяем поддержку Web Speech API
     if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(word.speachWord);
+        const utterance = new SpeechSynthesisUtterance(word.word);
 
         // Устанавливаем язык (можно попробовать разные варианты)
         utterance.lang = 'tr-TR'; // Турецкий как приближение к татарскому
@@ -65,7 +65,7 @@ function speakWord(word) {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', async function() {
-    // Загрузка данных из JSON
+    // Загрузка данных из TXT
     await loadWordsData();
 
     // Инициализация фильтров
@@ -94,14 +94,46 @@ function getNoun(number, one, two, five) {
     return five;
 }
 
-// Загрузка данных из JSON
+// Загрузка данных из TXT
 async function loadWordsData() {
     try {
-        const response = await fetch('../words.json');
-        wordsData = await response.json();
+        const response = await fetch('../soylash_data.txt');
+        const textData = await response.text();
+
+        // Парсинг текстовых данных
+        const lines = textData.split('\n');
+        wordsData = lines.map(line => {
+            const [word, partOfSpeech, frequency, translation, example] = line.split(';');
+            return {
+                word: word.trim(),
+                partOfSpeech: partOfSpeech.trim(),
+                translation: translation.trim(),
+                example: example ? example.trim() : '',
+                theme: getThemeByPartOfSpeech(partOfSpeech.trim()),
+                speachWord: word.trim(), // Для озвучивания
+                imageQuery: word.trim() // Для поиска изображений
+            };
+        }).filter(word => word.word); // Фильтрация пустых строк
     } catch (error) {
         console.error('Ошибка загрузки данных:', error);
     }
+}
+
+// Функция для определения темы по части речи
+function getThemeByPartOfSpeech(partOfSpeech) {
+    const themes = {
+        'N': 'Существительные',
+        'V': 'Глаголы',
+        'ADJ': 'Прилагательные',
+        'ADV': 'Наречия',
+        'POST': 'Послелоги',
+        'PART': 'Частицы',
+        'PROP': 'Свойства',
+        'MOD': 'Модальные',
+        'INTRJ': 'Междометия',
+        'PN': 'Местоимения'
+    };
+    return themes[partOfSpeech] || 'Другие';
 }
 
 // Инициализация фильтров тем
@@ -127,11 +159,6 @@ function initThemeFilters() {
 
 // Установка обработчиков событий
 function setupEventListeners() {
-    // Кнопка "Назад к изучению"
-    document.querySelector('header .btn-outline')?.addEventListener('click', function() {
-        window.location.href = 'wordLearning.html';
-    });
-
     // Фильтры по темам
     document.querySelectorAll('.theme-filter button').forEach(button => {
         button.addEventListener('click', function() {
@@ -164,6 +191,7 @@ function displayFavorites() {
 
     if (favorites.length === 0) {
         favoritesList.innerHTML = '<div class="empty-favorites">У вас пока нет избранных слов</div>';
+        updateFavoritesCount(0);
         return;
     }
 
@@ -177,6 +205,7 @@ function displayFavorites() {
 
     if (favoriteWordsData.length === 0) {
         favoritesList.innerHTML = '<div class="empty-favorites">Нет слов в выбранной теме</div>';
+        updateFavoritesCount(0);
         return;
     }
 
@@ -197,11 +226,11 @@ function displayFavorites() {
                 </button>
             </div>
             <div class="favorite-meta">
-                <span>${word.transcription}</span>
+                <span>${word.word.toLowerCase()}</span>
                 <span class="word-theme-badge">${word.theme}</span>
             </div>
             <div class="favorite-translation">${word.translation}</div>
-            <p class="favorite-description">${word.description}</p>
+            <p class="favorite-description">${word.example}</p>
             <div class="favorite-actions">
                 <button class="btn-outline remove-favorite" data-word="${word.word}">
                     Удалить
@@ -225,11 +254,7 @@ function displayFavorites() {
 
             // Обновляем список и фильтры
             displayFavorites();
-
-            // Переинициализируем фильтры, если список избранного изменился
-            if (updatedFavorites.length !== favorites.length) {
-                initThemeFilters();
-            }
+            initThemeFilters();
         });
     });
 }
