@@ -7,12 +7,14 @@ function getFavorites() {
     const favoritesJSON = localStorage.getItem('tatarLearnFavorites');
     return favoritesJSON ? JSON.parse(favoritesJSON) : [];
 }
+
 function updateFavoritesCount(count) {
     const countElement = document.querySelector('.favorites-count');
     if (countElement) {
         countElement.textContent = `${count} ${getNoun(count, 'слово', 'слова', 'слов')}`;
     }
 }
+
 function saveFavorites(favorites) {
     localStorage.setItem('tatarLearnFavorites', JSON.stringify(favorites));
 }
@@ -26,6 +28,39 @@ function removeFromFavorites(word) {
         saveFavorites(favorites);
     }
     return favorites;
+}
+
+// Функция для озвучивания слова
+function speakWord(word) {
+    if (!word || !word.speachWord) return;
+
+    // Проверяем поддержку Web Speech API
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(word.speachWord);
+
+        // Устанавливаем язык (можно попробовать разные варианты)
+        utterance.lang = 'tr-TR'; // Турецкий как приближение к татарскому
+        // Или попробовать русский, если турецкий не работает хорошо
+        // utterance.lang = 'ru-RU';
+
+        // Настройки голоса
+        utterance.rate = 0.9; // Скорость речи
+        utterance.pitch = 1; // Высота тона
+
+        // Попытка найти подходящий голос
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(voice =>
+            voice.lang.includes('tr') || voice.lang.includes('ru'));
+
+        if (preferredVoice) {
+            utterance.voice = preferredVoice;
+        }
+
+        // Озвучивание
+        window.speechSynthesis.speak(utterance);
+    } else {
+        alert('Ваш браузер не поддерживает озвучивание текста. Попробуйте использовать Chrome или Edge.');
+    }
 }
 
 // Инициализация при загрузке страницы
@@ -42,6 +77,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Установка обработчиков событий
     setupEventListeners();
 });
+
 function getNoun(number, one, two, five) {
     let n = Math.abs(number);
     n %= 100;
@@ -57,6 +93,7 @@ function getNoun(number, one, two, five) {
     }
     return five;
 }
+
 // Загрузка данных из JSON
 async function loadWordsData() {
     try {
@@ -150,7 +187,15 @@ function displayFavorites() {
         const favoriteItem = document.createElement('div');
         favoriteItem.className = 'favorite-item';
         favoriteItem.innerHTML = `
-            <h3 class="favorite-title">${word.word}</h3>
+            <div class="favorite-header">
+                <h3 class="favorite-title">${word.word}</h3>
+                <button class="speak-favorite-btn" data-word="${word.word}">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                    </svg>
+                </button>
+            </div>
             <div class="favorite-meta">
                 <span>${word.transcription}</span>
                 <span class="word-theme-badge">${word.theme}</span>
@@ -164,6 +209,12 @@ function displayFavorites() {
             </div>
         `;
         favoritesList.appendChild(favoriteItem);
+
+        // Добавляем обработчик для кнопки озвучивания
+        const speakBtn = favoriteItem.querySelector('.speak-favorite-btn');
+        speakBtn.addEventListener('click', () => {
+            speakWord(word);
+        });
     });
 
     // Добавляем обработчики событий для кнопок удаления

@@ -1,126 +1,155 @@
-// Данные из JSON
-let wordsData = [];
-let currentWord = null;
-let correctAnswer = null;
-let quizCompleted = false;
+// WordQuiz.js
+let allQuestions = [];
+let currentQuiz = {
+    total: 0,
+    current: 0,
+    correct: 0,
+    mistakes: []
+};
 
 // DOM элементы
+const quizStart = document.getElementById('quiz-start');
+const quizProgress = document.getElementById('quiz-progress');
+const quizContent = document.getElementById('quiz-content');
+const quizResults = document.getElementById('quiz-results');
 const quizWordText = document.getElementById('quiz-word-text');
 const quizWordTranscription = document.getElementById('quiz-word-transcription');
 const quizOptions = document.getElementById('quiz-options');
 const quizFeedback = document.getElementById('quiz-feedback');
 const nextQuizBtn = document.getElementById('next-quiz-btn');
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', async function() {
-    // Загрузка данных из JSON
-    await loadWordsData();
-
-    // Начало квиза
-    startNewQuiz();
-
-    // Обработчик для кнопки "Следующее слово"
-    nextQuizBtn.addEventListener('click', startNewQuiz);
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadData();
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', startQuiz);
+    });
 });
 
-// Загрузка данных из JSON
-async function loadWordsData() {
+async function loadData() {
     try {
-        const response = await fetch('../words.json');
-        wordsData = await response.json();
+        const [wordsRes, phrasesRes] = await Promise.all([
+            fetch('../words.json'),
+            fetch('../phrases.json')
+        ]);
+        const words = await wordsRes.json();
+        const phrases = await phrasesRes.json();
+        allQuestions = [...words, ...phrases];
     } catch (error) {
-        console.error('Ошибка загрузки данных:', error);
+        console.error('Ошибка загрузки:', error);
+        alert('Ошибка загрузки данных. Пожалуйста, перезагрузите страницу.');
     }
 }
 
-// Начать новый вопрос квиза
-function startNewQuiz() {
-    // Сброс состояния
-    quizCompleted = false;
+function startQuiz(e) {
+    const size = parseInt(e.target.dataset.size);
+    currentQuiz = {
+        total: size,
+        current: 1,
+        correct: 0,
+        mistakes: []
+    };
+
+    quizStart.style.display = 'none';
+    quizProgress.style.display = 'block';
+    quizContent.style.display = 'block';
+    quizResults.style.display = 'none';
+
+    document.getElementById('total-questions').textContent = size;
+    showNextQuestion();
+}
+
+function showNextQuestion() {
+    if (currentQuiz.current > currentQuiz.total) {
+        showResults();
+        return;
+    }
+
+    document.getElementById('current-question').textContent = currentQuiz.current;
+    const question = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+
+    // Очистка предыдущего состояния
+    quizWordText.textContent = question.word;
+    quizWordTranscription.textContent = question.transcription;
+    quizOptions.innerHTML = '';
     quizFeedback.innerHTML = '';
     nextQuizBtn.style.display = 'none';
 
-    // Выбор случайного слова
-    const randomIndex = Math.floor(Math.random() * wordsData.length);
-    currentWord = wordsData[randomIndex];
-
-    // Отображение слова
-    quizWordText.textContent = currentWord.word;
-    quizWordTranscription.textContent = currentWord.transcription;
-
-    // Генерация вариантов ответов
-    generateQuizOptions(currentWord);
-}
-
-// Генерация вариантов ответов
-function generateQuizOptions(correctWord) {
-    quizOptions.innerHTML = '';
-
-    // Создаем массив с 3 случайными неправильными ответами + правильный
-    let options = [correctWord.translation];
-
-    // Получаем 3 случайных неправильных перевода
+    // Генерация вариантов
+    const options = [question.translation];
     while (options.length < 4) {
-        const randomWord = wordsData[Math.floor(Math.random() * wordsData.length)];
-        if (!options.includes(randomWord.translation)) {
-            options.push(randomWord.translation);
-        }
+        const random = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+        if (!options.includes(random.translation)) options.push(random.translation);
     }
 
-    // Перемешиваем варианты
-    options = shuffleArray(options);
-
-    // Создаем кнопки для каждого варианта
-    options.forEach(option => {
-        const button = document.createElement('button');
-        button.className = 'quiz-option';
-        button.textContent = option;
-        button.addEventListener('click', () => checkAnswer(option));
-        quizOptions.appendChild(button);
+    shuffleArray(options).forEach(option => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.textContent = option;
+        btn.onclick = () => checkAnswer(option, question);
+        quizOptions.appendChild(btn);
     });
 }
 
-// Проверка ответа
-function checkAnswer(selectedAnswer) {
-    if (quizCompleted) return;
+function checkAnswer(selected, correct) {
+    const isCorrect = selected === correct.translation;
 
-    quizCompleted = true;
-    const options = document.querySelectorAll('.quiz-option');
+    if (isCorrect) {
+        currentQuiz.correct++;
+    } else {
+        currentQuiz.mistakes.push({
+            word: correct.word,
+            translation: correct.translation,
+            description: correct.description
+        });
+    }
 
-    // Проверяем правильность ответа
-    const isCorrect = selectedAnswer === currentWord.translation;
-
-    // Подсвечиваем кнопки
-    options.forEach(option => {
-        option.disabled = true;
-        if (option.textContent === currentWord.translation) {
-            option.classList.add('correct');
-        } else if (option.textContent === selectedAnswer && !isCorrect) {
-            option.classList.add('incorrect');
-        }
+    // Подсветка ответов
+    document.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.disabled = true;
+        btn.classList.toggle('correct', btn.textContent === correct.translation);
+        btn.classList.toggle('incorrect', !isCorrect && btn.textContent === selected);
     });
 
-    // Показываем обратную связь
-    showFeedback(isCorrect);
-
-    // Показываем кнопку "Следующее слово"
+    showFeedback(isCorrect, correct);
     nextQuizBtn.style.display = 'block';
+    currentQuiz.current++;
 }
 
-// Показать обратную связь
-function showFeedback(isCorrect) {
-    const feedbackDiv = document.createElement('div');
-    feedbackDiv.className = isCorrect ? 'feedback-correct' : 'feedback-incorrect';
-
-    feedbackDiv.innerHTML = `
-        <p>${isCorrect ? 'Правильно!' : 'Неправильно!'}</p>
-        <p>${currentWord.description}</p>
+function showFeedback(isCorrect, question) {
+    const feedback = document.createElement('div');
+    feedback.className = isCorrect ? 'feedback-correct' : 'feedback-incorrect';
+    feedback.innerHTML = `
+        <p>${isCorrect ? '✅ Правильно!' : '❌ Неправильно!'}</p>
+        <p><strong>Правильный ответ:</strong> ${question.translation}</p>
+        <p>${question.description}</p>
     `;
-
-    quizFeedback.appendChild(feedbackDiv);
+    quizFeedback.appendChild(feedback);
 }
 
-// Вспомогательная функция для перемешивания массива
+function showResults() {
+    quizContent.style.display = 'none';
+    quizProgress.style.display = 'none';
+    quizResults.style.display = 'block';
+
+    document.getElementById('correct-count').textContent = currentQuiz.correct;
+    document.getElementById('total-questions-result').textContent = currentQuiz.total;
+
+    const mistakesList = document.getElementById('mistakes-list');
+    if (currentQuiz.mistakes.length > 0) {
+        mistakesList.style.display = 'block';
+        mistakesList.innerHTML = currentQuiz.mistakes.map(item => `
+            <div class="mistake-item">
+                <p class="mistake-word">${item.word}</p>
+                <p class="mistake-translation"><strong>Правильный перевод:</strong> ${item.translation}</p>
+                <p class="mistake-description">${item.description}</p>
+            </div>
+        `).join('');
+    } else {
+        mistakesList.style.display = 'none';
+    }
+}
+
+// Вспомогательные функции
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -128,3 +157,5 @@ function shuffleArray(array) {
     }
     return array;
 }
+
+nextQuizBtn.addEventListener('click', showNextQuestion);

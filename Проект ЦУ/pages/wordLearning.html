@@ -10,7 +10,33 @@
 <body>
 <header>
     <h1><a href="./index.html">SoyLash</a></h1>
-    <button class="btn-outline"><a href="./favorites.html">Избранное</a></button>
+    <nav>
+        <ul class="main-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Изучение <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="wordLearning.html">Слова</a></li>
+                    <li><a href="phraseLearning.html">Фразы</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Избранное <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="favorites.html">Слова</a></li>
+                    <li><a href="favoritesPhrases.html">Фразы</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="WordQuiz.html">Угадай слово</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="translator.html" class="dropdown-toggle">Переводчик</a>
+            </li>
+        </ul>
+    </nav>
 </header>
 
 <div class="main-container">
@@ -32,6 +58,13 @@
                     <span class="word-theme">Еда</span>
                 </div>
                 <div class="word-actions-header">
+                    <button class="speak-btn btn-outline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                        Озвучить
+                    </button>
                     <button class="favorite-btn btn-outline">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -50,7 +83,7 @@
         </div>
     </main>
 </div>
-
+<script src="../js/voice.js"></script>
 <script src="../js/wordLearning.js"></script>
 </body>
 </html>

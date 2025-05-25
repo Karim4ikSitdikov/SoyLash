@@ -11,57 +11,104 @@
 <div class="container">
     <header>
         <h1><a href="./index.html">SoyLash</a></h1>
-        <p class="subtitle">Интерактивная платформа для изучения татарского языка</p>
+        <nav>
+            <ul class="main-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Изучение <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="wordLearning.html">Слова</a></li>
+                        <li><a href="phraseLearning.html">Фразы</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Избранное <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="favorites.html">Слова</a></li>
+                        <li><a href="favoritesPhrases.html">Фразы</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="WordQuiz.html">Угадай слово</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="translator.html" class="dropdown-toggle">Переводчик</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
     <main>
+        <h2 class="section-title">Основные разделы</h2>
         <div class="main-grid">
             <!-- Основные разделы -->
-            <div class="section-card" onclick="location.href='wordLearning.html'">
+            <a href="wordLearning.html" class="section-card">
                 <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
                     </svg>
                 </div>
-                <h2 class="card-title">Изучение слов</h2>
-                <p class="card-desc">Изучайте новые слова с транскрипцией, переводом и примерами</p>
-            </div>
+                <h3 class="card-title">Изучение слов</h3>
+                <p class="card-desc">Изучайте татарские слова с переводом и примерами</p>
+            </a>
 
-            <div class="section-card" onclick="location.href='favorites.html'">
+            <a href="phraseLearning.html" class="section-card">
+                <div class="card-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="card-title">Изучение фраз</h3>
+                <p class="card-desc">Популярные татарские фразы для повседневного общения</p>
+            </a>
+
+            <a href="favorites.html" class="section-card">
                 <div class="card-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                 </div>
-                <h2 class="card-title">Избранное</h2>
+                <h3 class="card-title">Избранные слова</h3>
                 <p class="card-desc">Ваша коллекция сохраненных слов для повторения</p>
-            </div>
+            </a>
 
-            <div class="section-card">
+            <a href="favoritesPhrases.html" class="section-card">
                 <div class="card-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                 </div>
-                <h2 class="card-title">Проверка знаний</h2>
-                <p class="card-desc">Тесты и упражнения для закрепления материала</p>
+                <h3 class="card-title">Избранные фразы</h3>
+                <p class="card-desc">Ваша коллекция сохраненных фраз для повторения</p>
+            </a>
 
-                <!-- Подразделы квизов -->
-                <div class="quiz-grid">
-                    <div class="quiz-card" onclick="location.href='WordQuiz.html'">
-                        <h3 class="quiz-title">Угадай перевод</h3>
-                        <p class="quiz-desc">Выберите правильный перевод слова</p>
-                    </div>
-                    <div class="quiz-card">
-                        <h3 class="quiz-title">Аудирование</h3>
-                        <p class="quiz-desc">Слушайте и определяйте слово</p>
-                    </div>
-                    <div class="quiz-card">
-                        <h3 class="quiz-title">Картинка</h3>
-                        <p class="quiz-desc">Выберите слово, соответствующее изображению</p>
-                    </div>
+            <a href="translator.html" class="section-card">
+                <div class="card-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 0 1 6.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                    </svg>
                 </div>
-            </div>
+                <h3 class="card-title">Переводчик</h3>
+                <p class="card-desc">Переводите текст между русским и татарским языками</p>
+            </a>
+        </div>
+
+        <h2 class="section-title">Проверка знаний</h2>
+        <div class="main-grid">
+            <a href="WordQuiz.html" class="section-card">
+                <div class="card-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 9l4-4 4 4"></path>
+                        <path d="M16 15l-4 4-4-4"></path>
+                    </svg>
+                </div>
+                <h3 class="card-title">Угадай перевод</h3>
+                <p class="card-desc">Выберите правильный перевод слова</p>
+            </a>
+
         </div>
     </main>
 

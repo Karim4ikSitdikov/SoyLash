@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изучение татарских фраз | SoyLash</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header>
+    <h1><a href="./index.html">SoyLash</a></h1>
+    <nav>
+        <ul class="main-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Изучение <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="wordLearning.html">Слова</a></li>
+                    <li><a href="phraseLearning.html">Фразы</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Избранное <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="favorites.html">Слова</a></li>
+                    <li><a href="favoritesPhrases.html">Фразы</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="WordQuiz.html">Угадай слово</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="translator.html" class="dropdown-toggle">Переводчик</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="main-container">
+    <aside class="filters">
+        <h2>Темы фраз</h2>
+        <ul class="theme-filter" id="theme-filters">
+            <li><button class="active" data-theme="all">Все темы</button></li>
+        </ul>
+    </aside>
+
+    <main>
+        <div class="word-card">
+            <div class="word-header">
+                <h2 class="word-title" id="phrase-title">Фраза</h2>
+                <button class="speak-btn btn-outline" id="speak-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                    </svg>
+                    Озвучить
+                </button>
+            </div>
+
+            <div class="transcription" id="phrase-transcription">[транскрипция]</div>
+            <span class="word-theme" id="phrase-theme">Тема</span>
+
+            <div class="word-translation" id="phrase-translation">Перевод</div>
+            <p class="word-description" id="phrase-description">Описание фразы и примеры использования.</p>
+
+            <div class="word-actions">
+                <button class="btn-primary" id="next-phrase-btn">Следующая фраза</button>
+                <button class="favorite-btn btn-outline" id="favorite-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    В избранное
+                </button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer>
+    <p>© 2023 TatarLearn. Все права защищены.</p>
+</footer>
+
+<script src="../js/phraseLearning.js"></script>
+</body>
+</html>

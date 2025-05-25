@@ -1,22 +1,25 @@
 [
   {
     "word": "Ит",
+    "speachWord": "Ит",
     "theme": "Еда",
     "transcription": "[it]",
     "translation": "Мясо",
     "description": "Основной продукт животного происхождения",
-    "imageQuery": "мясо татарская кухня"
+    "imageQuery": "мясо"
   },
   {
     "word": "Балиш",
+    "speachWord": "Балиш",
     "theme": "Еда",
     "transcription": "[ba'liʃ]",
     "translation": "Пирог с мясом",
     "description": "Традиционный татарский пирог с начинкой",
-    "imageQuery": "татарский балиш"
+    "imageQuery": "балиш"
   },
   {
     "word": "Чәй",
+    "speachWord": "Чай",
     "theme": "Еда",
     "transcription": "[tʃæj]",
     "translation": "Чай",
@@ -25,6 +28,7 @@
   },
   {
     "word": "Кыстыбый",
+    "speachWord": "Кыстыбый",
     "theme": "Еда",
     "transcription": "[qɤstɤ'bɤj]",
     "translation": "Лепешка с начинкой",
@@ -33,6 +37,7 @@
   },
   {
     "word": "Өчпочмак",
+    "speachWord": "Очпочмак",
     "theme": "Еда",
     "transcription": "[øtʃpotʃ'maq]",
     "translation": "Треугольник (пирожок)",
@@ -41,6 +46,7 @@
   },
   {
     "word": "Гөбәдия",
+    "speachWord": "Гобадия",
     "theme": "Еда",
     "transcription": "[gøbæ'dija]",
     "translation": "Многослойный пирог",
@@ -49,6 +55,7 @@
   },
   {
     "word": "Эчпочмак",
+    "speachWord": "Эчпочмак",
     "theme": "Еда",
     "transcription": "[etʃpotʃ'maq]",
     "translation": "Пирожок с начинкой",
@@ -57,6 +64,7 @@
   },
   {
     "word": "Сөт",
+    "speachWord": "Сот",
     "theme": "Еда",
     "transcription": "[søt]",
     "translation": "Молоко",
@@ -65,6 +73,7 @@
   },
   {
     "word": "Катык",
+    "speachWord": "Катык",
     "theme": "Еда",
     "transcription": "[qa'tɤq]",
     "translation": "Кисломолочный напиток",
@@ -73,6 +82,7 @@
   },
   {
     "word": "Коймак",
+    "speachWord": "Коймак",
     "theme": "Еда",
     "transcription": "[qoj'maq]",
     "translation": "Блин",
@@ -81,6 +91,7 @@
   },
   {
     "word": "Бәрәңге",
+    "speachWord": "Баренге",
     "theme": "Еда",
     "transcription": "[bæræŋ'ge]",
     "translation": "Картофель",
@@ -89,6 +100,7 @@
   },
   {
     "word": "Кызылча",
+    "speachWord": "Кызылча",
     "theme": "Еда",
     "transcription": "[qɤzɤl'tʃa]",
     "translation": "Свекла",
@@ -97,6 +109,7 @@
   },
   {
     "word": "Бал",
+    "speachWord": "Бал",
     "theme": "Еда",
     "transcription": "[bal]",
     "translation": "Мед",
@@ -105,6 +118,7 @@
   },
   {
     "word": "Чөгендер",
+    "speachWord": "Чогендер",
     "theme": "Еда",
     "transcription": "[tʃøgen'der]",
     "translation": "Сахарная свекла",
@@ -113,6 +127,7 @@
   },
   {
     "word": "Май",
+    "speachWord": "Май",
     "theme": "Еда",
     "transcription": "[maj]",
     "translation": "Масло",
@@ -121,6 +136,7 @@
   },
   {
     "word": "Творог",
+    "speachWord": "Творог",
     "theme": "Еда",
     "transcription": "[tvorog]",
     "translation": "Творог",
@@ -129,6 +145,7 @@
   },
   {
     "word": "Колбаса",
+    "speachWord": "Колбаса",
     "theme": "Еда",
     "transcription": "[kolba'sa]",
     "translation": "Колбаса",
@@ -137,6 +154,7 @@
   },
   {
     "word": "Пылау",
+    "speachWord": "Пылау",
     "theme": "Еда",
     "transcription": "[pɤ'law]",
     "translation": "Плов",
@@ -145,6 +163,7 @@
   },
   {
     "word": "Аш",
+    "speachWord": "Аш",
     "theme": "Еда",
     "transcription": "[aʃ]",
     "translation": "Суп",
@@ -153,6 +172,7 @@
   },
   {
     "word": "Кымыз",
+    "speachWord": "Кымыз",
     "theme": "Еда",
     "transcription": "[qɤ'mɤz]",
     "translation": "Кумыс",
@@ -161,6 +181,7 @@
   },
   {
     "word": "Күлмәк",
+    "speachWord": "Кульмак",
     "theme": "Одежда",
     "transcription": "[kyl'mæk]",
     "translation": "Платье",
@@ -169,6 +190,7 @@
   },
   {
     "word": "Штаны",
+    "speachWord": "Штаны",
     "theme": "Одежда",
     "transcription": "[ʃta'nɤ]",
     "translation": "Брюки",
@@ -177,6 +199,7 @@
   },
   {
     "word": "Камзол",
+    "speachWord": "Камзол",
     "theme": "Одежда",
     "transcription": "[qam'zol]",
     "translation": "Жилет",
@@ -185,6 +208,7 @@
   },
   {
     "word": "Түбәтәй",
+    "speachWord": "Тубатай",
     "theme": "Одежда",
     "transcription": "[tybæ'tæj]",
     "translation": "Тюбетейка",
@@ -193,6 +217,7 @@
   },
   {
     "word": "Читек",
+    "speachWord": "Читек",
     "theme": "Одежда",
     "transcription": "[tʃi'tek]",
     "translation": "Сапоги",
@@ -201,6 +226,7 @@
   },
   {
     "word": "Күкрәкчә",
+    "speachWord": "Кукракча",
     "theme": "Одежда",
     "transcription": "[kykræk'tʃæ]",
     "translation": "Майка",
@@ -209,6 +235,7 @@
   },
   {
     "word": "Кәләпүш",
+    "speachWord": "Каляпуш",
     "theme": "Одежда",
     "transcription": "[kælæ'pyʃ]",
     "translation": "Головной платок",
@@ -217,6 +244,7 @@
   },
   {
     "word": "Куртка",
+    "speachWord": "Куртка",
     "theme": "Одежда",
     "transcription": "[kur'tqa]",
     "translation": "Куртка",
@@ -225,6 +253,7 @@
   },
   {
     "word": "Итек",
+    "speachWord": "Итек",
     "theme": "Одежда",
     "transcription": "[i'tek]",
     "translation": "Ботинки",
@@ -233,6 +262,7 @@
   },
   {
     "word": "Яулык",
+    "speachWord": "Яулык",
     "theme": "Одежда",
     "transcription": "[jaw'lɤq]",
     "translation": "Платок",
@@ -241,6 +271,7 @@
   },
   {
     "word": "Чыбыр",
+    "speachWord": "Чыбыр",
     "theme": "Одежда",
     "transcription": "[tʃɤ'bɤr]",
     "translation": "Пояс",
@@ -249,6 +280,7 @@
   },
   {
     "word": "Билбау",
+    "speachWord": "Билбау",
     "theme": "Одежда",
     "transcription": "[bil'baw]",
     "translation": "Ремень",
@@ -257,6 +289,7 @@
   },
   {
     "word": "Күлдәк",
+    "speachWord": "Кульдак",
     "theme": "Одежда",
     "transcription": "[kyl'dæk]",
     "translation": "Рубашка",
@@ -265,6 +298,7 @@
   },
   {
     "word": "Кәзәкәй",
+    "speachWord": "Казакай",
     "theme": "Одежда",
     "transcription": "[kæzæ'kæj]",
     "translation": "Шапка",
@@ -273,6 +307,7 @@
   },
   {
     "word": "Күн",
+    "speachWord": "Кун",
     "theme": "Одежда",
     "transcription": "[kyn]",
     "translation": "Шуба",
@@ -281,6 +316,7 @@
   },
   {
     "word": "Очалык",
+    "speachWord": "Очалык",
     "theme": "Одежда",
     "transcription": "[otʃa'lɤq]",
     "translation": "Шарф",
@@ -289,6 +325,7 @@
   },
   {
     "word": "Башмак",
+    "speachWord": "Башмак",
     "theme": "Одежда",
     "transcription": "[baʃ'maq]",
     "translation": "Туфли",
@@ -297,6 +334,7 @@
   },
   {
     "word": "Күлмәк",
+    "speachWord": "Кульмак",
     "theme": "Одежда",
     "transcription": "[kyl'mæk]",
     "translation": "Юбка",
@@ -305,6 +343,7 @@
   },
   {
     "word": "Кәүкә",
+    "speachWord": "Каука",
     "theme": "Одежда",
     "transcription": "[kæw'kæ]",
     "translation": "Перчатки",
@@ -313,6 +352,7 @@
   },
   {
     "word": "Кием",
+    "speachWord": "Кием",
     "theme": "Одежда",
     "transcription": "[ki'jem]",
     "translation": "Одежда",
@@ -321,6 +361,7 @@
   },
   {
     "word": "Аю",
+    "speachWord": "Аю",
     "theme": "Животные",
     "transcription": "[aˈju]",
     "translation": "Медведь",
@@ -329,6 +370,7 @@
   },
   {
     "word": "Бүре",
+    "speachWord": "Буре",
     "theme": "Животные",
     "transcription": "[byˈre]",
     "translation": "Волк",
@@ -337,6 +379,7 @@
   },
   {
     "word": "Тылкы",
+    "speachWord": "Тылкы",
     "theme": "Животные",
     "transcription": "[tɯlˈqɯ]",
     "translation": "Лиса",
@@ -345,6 +388,7 @@
   },
   {
     "word": "Куян",
+    "speachWord": "Куян",
     "theme": "Животные",
     "transcription": "[quˈjan]",
     "translation": "Заяц",
@@ -353,6 +397,7 @@
   },
   {
     "word": "Сыртлан",
+    "speachWord": "Сыртлан",
     "theme": "Животные",
     "transcription": "[sɯrtˈlan]",
     "translation": "Гиена",
@@ -361,6 +406,7 @@
   },
   {
     "word": "Юлбарыс",
+    "speachWord": "Юлбарыс",
     "theme": "Животные",
     "transcription": "[qɯrˈɣɯj]",
     "translation": "Тигр",
@@ -369,6 +415,7 @@
   },
   {
     "word": "Арыслан",
+    "speachWord": "Арыслан",
     "theme": "Животные",
     "transcription": "[arɯsˈlan]",
     "translation": "Лев",
@@ -377,6 +424,7 @@
   },
   {
     "word": "Каз",
+    "speachWord": "Каз",
     "theme": "Животные",
     "transcription": "[qaz]",
     "translation": "Гусь",
@@ -385,6 +433,7 @@
   },
   {
     "word": "Өрдәк",
+    "speachWord": "Ордак",
     "theme": "Животные",
     "transcription": "[ørˈdæk]",
     "translation": "Утка",
@@ -393,6 +442,7 @@
   },
   {
     "word": "Тавык",
+    "speachWord": "Тавык",
     "theme": "Животные",
     "transcription": "[taˈvɯq]",
     "translation": "Курица",
@@ -401,6 +451,7 @@
   },
   {
     "word": "Эт",
+    "speachWord": "Эт",
     "theme": "Животные",
     "transcription": "[et]",
     "translation": "Собака",
@@ -409,6 +460,7 @@
   },
   {
     "word": "Мәче",
+    "speachWord": "Маче",
     "theme": "Животные",
     "transcription": "[mæˈtʃe]",
     "translation": "Кошка",
@@ -417,6 +469,7 @@
   },
   {
     "word": "Сыер",
+    "speachWord": "Сыер",
     "theme": "Животные",
     "transcription": "[sɯˈjer]",
     "translation": "Корова",
@@ -425,6 +478,7 @@
   },
   {
     "word": "Ат",
+    "speachWord": "Ат",
     "theme": "Животные",
     "transcription": "[at]",
     "translation": "Лошадь",
@@ -433,6 +487,7 @@
   },
   {
     "word": "Кәҗә",
+    "speachWord": "Каджа",
     "theme": "Животные",
     "transcription": "[kæˈdʒæ]",
     "translation": "Коза",
@@ -441,6 +496,7 @@
   },
   {
     "word": "Сарык",
+    "speachWord": "Сарык",
     "theme": "Животные",
     "transcription": "[saˈrɯq]",
     "translation": "Овца",
@@ -449,6 +505,7 @@
   },
   {
     "word": "Төлке",
+    "speachWord": "Толке",
     "theme": "Животные",
     "transcription": "[tølˈke]",
     "translation": "Лиса",
@@ -457,6 +514,7 @@
   },
   {
     "word": "Кыргау",
+    "speachWord": "Кыргау",
     "theme": "Животные",
     "transcription": "[qɯrˈɣaw]",
     "translation": "Журавль",
@@ -465,6 +523,7 @@
   },
   {
     "word": "Кош",
+    "speachWord": "Кош",
     "theme": "Животные",
     "transcription": "[qoʃ]",
     "translation": "Птица",
@@ -473,6 +532,7 @@
   },
   {
     "word": "Балык",
+    "speachWord": "Балык",
     "theme": "Животные",
     "transcription": "[baˈlɯq]",
     "translation": "Рыба",
@@ -481,6 +541,7 @@
   },
   {
     "word": "Мәктәп",
+    "speachWord": "Мактап",
     "theme": "Школа",
     "transcription": "[mækˈtæp]",
     "translation": "Школа",
@@ -489,6 +550,7 @@
   },
   {
     "word": "Укытучы",
+    "speachWord": "Укытучы",
     "theme": "Школа",
     "transcription": "[uquˈtutʃɯ]",
     "translation": "Учитель",
@@ -497,6 +559,7 @@
   },
   {
     "word": "Укучы",
+    "speachWord": "Укучы",
     "theme": "Школа",
     "transcription": "[uˈqutʃɯ]",
     "translation": "Ученик",
@@ -505,6 +568,7 @@
   },
   {
     "word": "Дәфтәр",
+    "speachWord": "Дафтар",
     "theme": "Школа",
     "transcription": "[dæfˈtær]",
     "translation": "Тетрадь",
@@ -513,6 +577,7 @@
   },
   {
     "word": "Китап",
+    "speachWord": "Китап",
     "theme": "Школа",
     "transcription": "[kiˈtap]",
     "translation": "Книга",
@@ -521,6 +586,7 @@
   },
   {
     "word": "Карандаш",
+    "speachWord": "Карандаш",
     "theme": "Школа",
     "transcription": "[qaranˈdaʃ]",
     "translation": "Карандаш",
@@ -529,6 +595,7 @@
   },
   {
     "word": "Ручка",
+    "speachWord": "Ручка",
     "theme": "Школа",
     "transcription": "[rutʃˈka]",
     "translation": "Ручка",
@@ -537,6 +604,7 @@
   },
   {
     "word": "Сызгыч",
+    "speachWord": "Сызгыч",
     "theme": "Школа",
     "transcription": "[sɯzˈɣɯtʃ]",
     "translation": "Линейка",
@@ -545,6 +613,7 @@
   },
   {
     "word": "Таблица",
+    "speachWord": "Таблица",
     "theme": "Школа",
     "transcription": "[tabliˈtsa]",
     "translation": "Таблица",
@@ -553,6 +622,7 @@
   },
   {
     "word": "Дәрес",
+    "speachWord": "Дарес",
     "theme": "Школа",
     "transcription": "[dæˈres]",
     "translation": "Урок",
@@ -561,6 +631,7 @@
   },
   {
     "word": "Сынау",
+    "speachWord": "Сынау",
     "theme": "Школа",
     "transcription": "[sɯˈnaw]",
     "translation": "Экзамен",
@@ -569,6 +640,7 @@
   },
   {
     "word": "Такта",
+    "speachWord": "Такта",
     "theme": "Школа",
     "transcription": "[taqˈta]",
     "translation": "Доска",
@@ -577,6 +649,7 @@
   },
   {
     "word": "Парта",
+    "speachWord": "Парта",
     "theme": "Школа",
     "transcription": "[parˈta]",
     "translation": "Парта",
@@ -585,6 +658,7 @@
   },
   {
     "word": "Белгеч",
+    "speachWord": "Белгеч",
     "theme": "Школа",
     "transcription": "[belˈgetʃ]",
     "translation": "Знание",
@@ -593,6 +667,7 @@
   },
   {
     "word": "Сыйныф",
+    "speachWord": "Сыйныф",
     "theme": "Школа",
     "transcription": "[sɯjˈnɯf]",
     "translation": "Класс",
@@ -601,6 +676,7 @@
   },
   {
     "word": "Кояш",
+    "speachWord": "Кояш",
     "theme": "Погода",
     "transcription": "[qoˈjaʃ]",
     "translation": "Солнце",
@@ -609,6 +685,7 @@
   },
   {
     "word": "Яңгыр",
+    "speachWord": "Янгыр",
     "theme": "Погода",
     "transcription": "[jaŋˈɣɯr]",
     "translation": "Дождь",
@@ -617,6 +694,7 @@
   },
   {
     "word": "Кар",
+    "speachWord": "Кар",
     "theme": "Погода",
     "transcription": "[qar]",
     "translation": "Снег",
@@ -625,6 +703,7 @@
   },
   {
     "word": "Буран",
+    "speachWord": "Буран",
     "theme": "Погода",
     "transcription": "[buˈran]",
     "translation": "Метель",
@@ -633,6 +712,7 @@
   },
   {
     "word": "Җил",
+    "speachWord": "Джил",
     "theme": "Погода",
     "transcription": "[dʒil]",
     "translation": "Ветер",
@@ -641,6 +721,7 @@
   },
   {
     "word": "Давыл",
+    "speachWord": "Давыл",
     "theme": "Погода",
     "transcription": "[daˈvɯl]",
     "translation": "Шторм",
@@ -649,6 +730,7 @@
   },
   {
     "word": "Томан",
+    "speachWord": "Томан",
     "theme": "Погода",
     "transcription": "[toˈman]",
     "translation": "Туман",
@@ -657,6 +739,7 @@
   },
   {
     "word": "Күк",
+    "speachWord": "Кук",
     "theme": "Погода",
     "transcription": "[kyk]",
     "translation": "Небо",
@@ -665,6 +748,7 @@
   },
   {
     "word": "Болыт",
+    "speachWord": "Болыт",
     "theme": "Погода",
     "transcription": "[boˈlɯt]",
     "translation": "Облако",
@@ -673,6 +757,7 @@
   },
   {
     "word": "Яшен",
+    "speachWord": "Яшен",
     "theme": "Погода",
     "transcription": "[jaˈʃen]",
     "translation": "Гром",
@@ -681,6 +766,7 @@
   },
   {
     "word": "Яшенле",
+    "speachWord": "Яшенле",
     "theme": "Погода",
     "transcription": "[jaʃenˈle]",
     "translation": "Гроза",
@@ -689,6 +775,7 @@
   },
   {
     "word": "Эссе",
+    "speachWord": "Эссе",
     "theme": "Погода",
     "transcription": "[eˈsːe]",
     "translation": "Жарко",
@@ -697,6 +784,7 @@
   },
   {
     "word": "Савыт",
+    "speachWord": "Савыт",
     "theme": "Погода",
     "transcription": "[saˈvɯt]",
     "translation": "Холодно",
@@ -705,6 +793,7 @@
   },
   {
     "word": "Дымлы",
+    "speachWord": "Дымлы",
     "theme": "Погода",
     "transcription": "[dɯmˈlɯ]",
     "translation": "Влажно",
@@ -713,6 +802,7 @@
   },
   {
     "word": "Кыш",
+    "speachWord": "Кыш",
     "theme": "Погода",
     "transcription": "[qɯʃ]",
     "translation": "Зима",
@@ -721,6 +811,7 @@
   },
   {
     "word": "Өй",
+    "speachWord": "Ой",
     "theme": "Дом",
     "transcription": "[øy]",
     "translation": "Дом",
@@ -729,6 +820,7 @@
   },
   {
     "word": "Бүлмә",
+    "speachWord": "Булма",
     "theme": "Дом",
     "transcription": "[bylˈmæ]",
     "translation": "Комната",
@@ -737,6 +829,7 @@
   },
   {
     "word": "Кухня",
+    "speachWord": "Кухня",
     "theme": "Дом",
     "transcription": "[quxˈnʲa]",
     "translation": "Кухня",
@@ -745,6 +838,7 @@
   },
   {
     "word": "Йокы бүлмәсе",
+    "speachWord": "Йокы булмасе",
     "theme": "Дом",
     "transcription": "[jɯˈqɯ bylˈmæse]",
     "translation": "Спальня",
@@ -753,6 +847,7 @@
   },
   {
     "word": "Җылылык",
+    "speachWord": "Джилылык",
     "theme": "Дом",
     "transcription": "[dʒɯˈlɯlɯq]",
     "translation": "Тепло",
@@ -761,6 +856,7 @@
   },
   {
     "word": "Ишек",
+    "speachWord": "Ишек",
     "theme": "Дом",
     "transcription": "[iˈʃek]",
     "translation": "Дверь",
@@ -769,6 +865,7 @@
   },
   {
     "word": "Тәрәзә",
+    "speachWord": "Тараза",
     "theme": "Дом",
     "transcription": "[tæræˈzæ]",
     "translation": "Окно",
@@ -777,6 +874,7 @@
   },
   {
     "word": "Диван",
+    "speachWord": "Диван",
     "theme": "Дом",
     "transcription": "[diˈvan]",
     "translation": "Диван",
@@ -785,6 +883,7 @@
   },
   {
     "word": "Өстәл",
+    "speachWord": "Остал",
     "theme": "Дом",
     "transcription": "[øsˈtæl]",
     "translation": "Стол",
@@ -793,6 +892,7 @@
   },
   {
     "word": "Урындык",
+    "speachWord": "Урындык",
     "theme": "Дом",
     "transcription": "[urɯnˈdɯq]",
     "translation": "Стул",
@@ -801,6 +901,7 @@
   },
   {
     "word": "Шкаф",
+    "speachWord": "Шкаф",
     "theme": "Дом",
     "transcription": "[ʃkaf]",
     "translation": "Шкаф",
@@ -809,6 +910,7 @@
   },
   {
     "word": "Чырау",
+    "speachWord": "Чырау",
     "theme": "Дом",
     "transcription": "[tʃɯˈraw]",
     "translation": "Лампа",
@@ -817,6 +919,7 @@
   },
   {
     "word": "Киләм",
+    "speachWord": "Килам",
     "theme": "Дом",
     "transcription": "[kiˈlæm]",
     "translation": "Ковёр",
@@ -825,6 +928,7 @@
   },
   {
     "word": "Пычак",
+    "speachWord": "Пычак",
     "theme": "Дом",
     "transcription": "[pɯˈtʃaq]",
     "translation": "Нож",
@@ -833,6 +937,7 @@
   },
   {
     "word": "Кашык",
+    "speachWord": "Кашык",
     "theme": "Дом",
     "transcription": "[qaˈʃɯq]",
     "translation": "Ложка",
@@ -841,6 +946,7 @@
   },
   {
     "word": "Шәһәр",
+    "speachWord": "Шахар",
     "theme": "Город",
     "transcription": "[ʃæ'hær]",
     "translation": "Город",
@@ -849,6 +955,7 @@
   },
   {
     "word": "Урам",
+    "speachWord": "Урам",
     "theme": "Город",
     "transcription": "[u'ram]",
     "translation": "Улица",
@@ -857,6 +964,7 @@
   },
   {
     "word": "Йорт",
+    "speachWord": "Йорт",
     "theme": "Город",
     "transcription": "[jort]",
     "translation": "Дом",
@@ -865,6 +973,7 @@
   },
   {
     "word": "Парк",
+    "speachWord": "Парк",
     "theme": "Город",
     "transcription": "[park]",
     "translation": "Парк",
@@ -873,6 +982,7 @@
   },
   {
     "word": "Күпер",
+    "speachWord": "Купер",
     "theme": "Город",
     "transcription": "[ky'per]",
     "translation": "Мост",
@@ -881,6 +991,7 @@
   },
   {
     "word": "Мәчет",
+    "speachWord": "Мачет",
     "theme": "Город",
     "transcription": "[mæ'tʃet]",
     "translation": "Мечеть",
@@ -889,6 +1000,7 @@
   },
   {
     "word": "Базар",
+    "speachWord": "Базар",
     "theme": "Город",
     "transcription": "[ba'zar]",
     "translation": "Рынок",
@@ -897,6 +1009,7 @@
   },
   {
     "word": "Метро",
+    "speachWord": "Метро",
     "theme": "Город",
     "transcription": "[me'tro]",
     "translation": "Метро",
@@ -905,6 +1018,7 @@
   },
   {
     "word": "Фонтан",
+    "speachWord": "Фонтан",
     "theme": "Город",
     "transcription": "[fon'tan]",
     "translation": "Фонтан",
@@ -913,6 +1027,7 @@
   },
   {
     "word": "Сирена",
+    "speachWord": "Сирена",
     "theme": "Развлечения",
     "transcription": "[si'rena]",
     "translation": "Аттракцион",
@@ -921,6 +1036,7 @@
   },
   {
     "word": "Уен",
+    "speachWord": "Уен",
     "theme": "Развлечения",
     "transcription": "[u'jen]",
     "translation": "Игра",
@@ -929,6 +1045,7 @@
   },
   {
     "word": "Сәяхәт",
+    "speachWord": "Сяхят",
     "theme": "Развлечения",
     "transcription": "[sæja'xæt]",
     "translation": "Путешествие",
@@ -937,6 +1054,7 @@
   },
   {
     "word": "Клуб",
+    "speachWord": "Клуб",
     "theme": "Развлечения",
     "transcription": "[klub]",
     "translation": "Клуб",
@@ -945,6 +1063,7 @@
   },
   {
     "word": "Сәнгәт көне",
+    "speachWord": "Сангат кони",
     "theme": "Развлечения",
     "transcription": "[sæŋ'gæt kø'ne]",
     "translation": "День искусства",
@@ -953,6 +1072,7 @@
   },
   {
     "word": "Кичә",
+    "speachWord": "Кича",
     "theme": "Развлечения",
     "transcription": "[ki'tʃæ]",
     "translation": "Вечеринка",
@@ -961,6 +1081,7 @@
   },
   {
     "word": "Сурәт",
+    "speachWord": "Сурат",
     "theme": "Развлечения",
     "transcription": "[su'ræt]",
     "translation": "Рисование",
@@ -969,6 +1090,7 @@
   },
   {
     "word": "Җыр",
+    "speachWord": "Джир",
     "theme": "Развлечения",
     "transcription": "[ʑɤr]",
     "translation": "Песня",
@@ -977,6 +1099,7 @@
   },
   {
     "word": "Бию",
+    "speachWord": "Бию",
     "theme": "Развлечения",
     "transcription": "[bi'ju]",
     "translation": "Танец",
@@ -985,6 +1108,7 @@
   },
   {
     "word": "Сәнгать",
+    "speachWord": "Сангат",
     "theme": "Искусство",
     "transcription": "[sæŋ'gæt]",
     "translation": "Искусство",
@@ -993,6 +1117,7 @@
   },
   {
     "word": "Рәссам",
+    "speachWord": "Рассам",
     "theme": "Искусство",
     "transcription": "[ræs'sam]",
     "translation": "Художник",
@@ -1001,6 +1126,7 @@
   },
   {
     "word": "Рәсем",
+    "speachWord": "Расем",
     "theme": "Искусство",
     "transcription": "[kar'tina]",
     "translation": "Картина",
@@ -1009,6 +1135,7 @@
   },
   {
     "word": "Һынлы сәнгать",
+    "speachWord": "Хынлы сангат",
     "theme": "Искусство",
     "transcription": "[hɤn'lɤ sæŋ'gæt]",
     "translation": "Изобразительное искусство",
@@ -1017,6 +1144,7 @@
   },
   {
     "word": "Гыйлем",
+    "speachWord": "Гыйлем",
     "theme": "Искусство",
     "transcription": "[ɣɤj'lem]",
     "translation": "Наука",
@@ -1025,6 +1153,7 @@
   },
   {
     "word": "Шигърият",
+    "speachWord": "Шигърият",
     "theme": "Искусство",
     "transcription": "[ʃiɣri'jat]",
     "translation": "Поэзия",
@@ -1033,6 +1162,7 @@
   },
   {
     "word": "Музыка",
+    "speachWord": "Музыка",
     "theme": "Искусство",
     "transcription": "[mu'zɤka]",
     "translation": "Музыка",
@@ -1041,6 +1171,7 @@
   },
   {
     "word": "Сынлы сәнгать",
+    "speachWord": "Сынлы сангат",
     "theme": "Искусство",
     "transcription": "[sɤn'lɤ sæŋ'gæt]",
     "translation": "Скульптура",
@@ -1049,6 +1180,7 @@
   },
   {
     "word": "Китап",
+    "speachWord": "Китап",
     "theme": "Искусство",
     "transcription": "[ki'tap]",
     "translation": "Книга",
@@ -1057,6 +1189,7 @@
   },
   {
     "word": "Архитектура",
+    "speachWord": "Архитектура",
     "theme": "Искусство",
     "transcription": "[arxi'tektura]",
     "translation": "Архитектура",

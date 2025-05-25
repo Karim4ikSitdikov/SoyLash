@@ -9,6 +9,7 @@ const favoriteBtn = document.querySelector('.favorite-btn');
 const nextWordBtn = document.querySelector('.btn-primary');
 const themeFilterButtons = document.querySelectorAll('.theme-filter button');
 const themeFilter = document.querySelector('.theme-filter');
+const speakBtn = document.querySelector('.speak-btn');
 
 // Данные из JSON
 let wordsData = [];
@@ -39,6 +40,7 @@ async function loadWordsData() {
         console.error('Ошибка загрузки данных:', error);
     }
 }
+
 // Создание фильтров тем на основе данных
 function createThemeFilters() {
     // Получаем все уникальные темы из данных
@@ -65,6 +67,7 @@ function createThemeFilters() {
     // Обновляем обработчики событий для новых кнопок
     updateThemeFilterListeners();
 }
+
 // Обновление обработчиков событий для кнопок фильтров
 function updateThemeFilterListeners() {
     const buttons = document.querySelectorAll('.theme-filter button');
@@ -82,6 +85,7 @@ function updateThemeFilterListeners() {
         });
     });
 }
+
 // Установка обработчиков событий
 function setupEventListeners() {
     // Кнопка "Следующее слово"
@@ -89,6 +93,9 @@ function setupEventListeners() {
 
     // Кнопка "В избранное"
     favoriteBtn.addEventListener('click', toggleFavorite);
+
+    // Кнопка "Озвучить"
+    speakBtn.addEventListener('click', speakCurrentWord);
 
     // Фильтры по темам
     themeFilterButtons.forEach(button => {
@@ -103,6 +110,7 @@ function setupEventListeners() {
             showRandomWord();
         });
     });
+
     // Кнопка перехода к избранному
     document.querySelector('header .btn-outline')?.addEventListener('click', function() {
         window.location.href = 'favorites.html';
@@ -144,6 +152,7 @@ function updateWordCard(word) {
 
     // Проверка, есть ли слово в избранном
     checkIfFavorite(word.word);
+
     // Обновляем кнопку озвучивания
     speakBtn.innerHTML = `
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -152,6 +161,59 @@ function updateWordCard(word) {
         </svg>
         Озвучить
     `;
+}
+
+// Озвучивание текущего слова
+function speakCurrentWord() {
+    if (!currentWord) return;
+
+    // Проверяем поддержку Web Speech API
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(currentWord.speachWord);
+
+        // Устанавливаем язык (можно попробовать разные варианты)
+        utterance.lang = 'tr-TR'; // Турецкий как приближение к татарскому
+        // Или попробовать русский, если турецкий не работает хорошо
+        // utterance.lang = 'ru-RU';
+
+        // Настройки голоса
+        utterance.rate = 0.9; // Скорость речи
+        utterance.pitch = 1; // Высота тона
+
+        // Попытка найти подходящий голос
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(voice =>
+            voice.lang.includes('tr') || voice.lang.includes('ru'));
+
+        if (preferredVoice) {
+            utterance.voice = preferredVoice;
+        }
+
+        // Озвучивание
+        window.speechSynthesis.speak(utterance);
+
+        // Обновляем кнопку во время озвучивания
+        speakBtn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+            </svg>
+            Озвучивается...
+        `;
+
+        // Возвращаем обычное состояние кнопки после завершения
+        utterance.onend = function() {
+            speakBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                </svg>
+                Озвучить
+            `;
+        };
+    } else {
+        alert('Ваш браузер не поддерживает озвучивание текста. Попробуйте использовать Chrome или Edge.');
+    }
 }
 
 // Загрузка изображения слова
@@ -228,7 +290,7 @@ function toggleFavorite() {
     checkIfFavorite(word);
 }
 
-// Общие функции для работы с LocalStorage (должны быть в обоих файлах)
+// Общие функции для работы с LocalStorage
 function getFavorites() {
     const favoritesJSON = localStorage.getItem('tatarLearnFavorites');
     return favoritesJSON ? JSON.parse(favoritesJSON) : [];

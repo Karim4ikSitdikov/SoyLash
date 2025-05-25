@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TatarLearn - Избранные фразы</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header>
+    <h1><a href="./index.html">SoyLash</a></h1>
+    <nav>
+        <ul class="main-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Изучение <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="wordLearning.html">Слова</a></li>
+                    <li><a href="phraseLearning.html">Фразы</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Избранное <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="favorites.html">Слова</a></li>
+                    <li><a href="favoritesPhrases.html">Фразы</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="WordQuiz.html">Угадай слово</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="translator.html" class="dropdown-toggle">Переводчик</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main class="main-container">
+    <div class="favorites-container">
+        <!-- Блок фильтров слева -->
+        <aside class="filters-section">
+            <div class="filters">
+                <h2>Фильтры</h2>
+                <ul class="theme-filter" id="theme-filters">
+                    <li><button class="active" data-theme="all">Все темы</button></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Основной контент справа -->
+        <section class="favorites-section">
+            <div class="favorites-header">
+                <h2>Избранные фразы</h2>
+                <span class="favorites-count">0 фраз</span>
+            </div>
+
+            <div id="favorites-list" class="favorites-grid">
+                <!-- Здесь будут карточки избранных фраз -->
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="../js/favoritesPhrases.js"></script>
+</body>
+</html>
