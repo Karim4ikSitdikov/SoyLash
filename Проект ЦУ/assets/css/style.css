@@ -1306,62 +1306,43 @@ button.recording {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
 .word-accuracy {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
+    flex-wrap: wrap;
     margin-top: 15px;
 }
 
-.accuracy-0 { background-color: #4CAF50; color: white; }
-.accuracy-1 { background-color: #8BC34A; color: white; }
-.accuracy-2 { background-color: #FFC107; color: black; }
-.accuracy-3 { background-color: #F44336; color: white; }
-
 .word-box {
-    padding: 4px 8px;
-    border-radius: 4px;
-    display: inline-block;
-    margin: 2px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    border: 2px solid;
 }
 
-.audio-container {
-    margin-top: 20px;
-    display: none;
+/* Стили для разной точности */
+.word-box.accuracy-80,
+.word-box.accuracy-90,
+.word-box.accuracy-100 {
+    background: #e6f4ea;
+    border-color: #34a853;
+    color: #137333;
 }
 
-.record-btn {
-    background-color: #f44336;
-    color: white;
+.word-box.accuracy-50,
+.word-box.accuracy-60,
+.word-box.accuracy-70 {
+    background: #fef7e0;
+    border-color: #f9ab00;
+    color: #e37400;
 }
 
-.check-btn {
-    background-color: #9C27B0;
-    color: white;
-}
-
-.result-container {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 4px;
-    background-color: #f5f5f5;
-}
-
-.word-accuracy {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.accuracy-0 { background-color: #4CAF50; }
-.accuracy-1 { background-color: #8BC34A; }
-.accuracy-2 { background-color: #FFC107; }
-.accuracy-3 { background-color: #F44336; }
-
-#pronunciationSection {
-    margin-top: 30px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
+.word-box.accuracy-0,
+.word-box.accuracy-10,
+.word-box.accuracy-20,
+.word-box.accuracy-30,
+.word-box.accuracy-40 {
+    background: #fce8e6;
+    border-color: #d93025;
+    color: #c5221f;
 }

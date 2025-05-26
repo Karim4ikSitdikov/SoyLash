@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Татарский язык - Аудио-квиз</title>
+    <style>
+        /* Добавьте стили для кнопок, контейнеров и прогресс-бара */
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .quiz-options { display: none; }
+        .option-btn { margin: 5px; padding: 10px; width: 100%; }
+        #progress { height: 20px; background: #eee; margin: 10px 0; }
+        #progress-bar { height: 100%; width: 0%; background: #4CAF50; }
+    </style>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="./index.html">SoyLash</a></h1>
+        <nav>
+            <ul class="main-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Обучение<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="wordLearning.html">Тренировка произношения</a></li>
+                        <li><a href="WordSpelling.html">Проверка произношения (ручной ввод)</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="favorites.html" class="dropdown-toggle">Избранное</a>
+                </li>
+                <li>
+                    <a href="translator.html" class="dropdown-toggle">Переводчик</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="WordQuiz.html">Угадай перевод</a></li>
+                        <li><a href="ImageQuiz.html">Угадай что на картинке</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div id="start-screen">
+            <h2>Выберите количество вопросов:</h2>
+            <button onclick="startQuiz(10)">10 вопросов</button>
+            <button onclick="startQuiz(20)">20 вопросов</button>
+            <button onclick="startQuiz(30)">30 вопросов</button>
+        </div>
+
+        <div class="quiz-options">
+            <div id="progress"><div id="progress-bar"></div></div>
+            <button id="speak-btn" onclick="speakCurrentWord()"></button>
+            <div id="options-container"></div>
+        </div>
+
+        <div id="results" style="display: none;">
+            <h2>Результаты:</h2>
+            <p>Правильно: <span id="correct-count">0</span></p>
+            <p>Неправильно: <span id="incorrect-count">0</span></p>
+            <div id="incorrect-answers"></div>
+        </div>
+
+        <audio id="sample-audio" controls style="display: none;"></audio>
+    </div>
+
+    <script src="../js/audioQuiz.js"></script>
+</body>
+</html>

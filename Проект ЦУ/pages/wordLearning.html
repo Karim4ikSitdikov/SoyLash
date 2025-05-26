@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -73,22 +72,33 @@
             </div>
 
             <div class="word-translation">Слово</div>
-            <p class="word-description">Основная единица языка, служащая для именования понятий, предметов, лиц, действий, состояний, признаков, связей, отношений, оценок.</p>
+            <p class="word-description" style="display: none">Основная единица языка, служащая для именования понятий, предметов, лиц, действий, состояний, признаков, связей, отношений, оценок.</p>
 
             <div class="word-actions">
                 <button class="btn-primary">Следующее слово</button>
             </div>
 
             <div id="pronunciationSection">
-                <h3>Проверка произношения</h3>
+                <h2 style="margin-top: 50px; margin-bottom: 20px;">Проверка произношения</h2>
                 <div>
                     <button id="recordBtn" class="record-btn">Начать запись</button>
                     <button id="checkBtn" class="check-btn" disabled>Проверить</button>
                 </div>
 
-                <div class="audio-container" id="userAudioContainer">
+                <div class="audio-container" id="sampleAudioContainer" style="display: none;">
+                    <h4>Пример произношения:</h4>
+                    <audio id="sampleAudioPlayer" controls></audio>
+                </div>
+
+                <div class="audio-container" id="userAudioContainer" style="display: none;">
                     <h4>Ваша запись:</h4>
                     <audio id="userAudioPlayer" controls></audio>
+                </div>
+
+
+                <div class="audio-container" id="feedbackAudioContainer" style="display: none;">
+                    <h4>Исправленное произношение:</h4>
+                    <audio id="feedbackAudioPlayer" controls></audio>
                 </div>
 
                 <div class="result-container" id="resultContainer" style="display: none;">

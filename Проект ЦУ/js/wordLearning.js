@@ -22,6 +22,9 @@ const resultText = document.getElementById('resultText');
 const wordAccuracy = document.getElementById('wordAccuracy');
 const sampleAudioContainer = document.getElementById('sampleAudioContainer');
 const sampleAudioPlayer = document.getElementById('sampleAudioPlayer');
+const feedbackAudioPlayer = document.getElementById('feedbackAudioPlayer');
+const feedbackAudioContainer = document.getElementById('feedbackAudioContainer')
+const userAudioContainer = document.getElementById('userAudioContainer')
 
 function initRecording() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -73,7 +76,7 @@ checkBtn.addEventListener('click', async function() {
         formData.append('text', currentWord.word);
         formData.append('audio', userAudioBlob, 'recording.wav');
 
-        const response = await fetch('http://localhost:5001/check_pronunciation', {
+        const response = await fetch('http://localhost:5003/check_pronunciation', {
             method: 'POST',
             body: formData
         });
@@ -90,26 +93,128 @@ checkBtn.addEventListener('click', async function() {
 
 // Отображение результатов проверки
 function displayPronunciationResult(result) {
+    console.log("Полученные данные с сервера:", result);
+
     resultContainer.style.display = 'block';
-    wordAccuracy.innerHTML = '';
 
     if (result.result === "correct") {
-        resultText.textContent = "✅ Правильное произношение!";
+        resultText.textContent = "✅ Ваше произношение правильное!"; //вывод текста правильно или нет
         resultText.style.color = "green";
+        feedbackAudioContainer.style.display = 'none';
     } else {
-        resultText.textContent = "❌ Нужно поработать над произношением";
+        resultText.textContent = "❌ Ваше произношение содержит ошибки. Прослушайте исправленный вариант:";
         resultText.style.color = "red";
+
+        if (result.feedback_audio) { // если неправильно, то выводится замедленное в местах ошибок аудио
+            const audioBlob = base64ToBlob(result.feedback_audio, 'audio/wav');
+            const audioUrl = URL.createObjectURL(audioBlob);
+            feedbackAudioPlayer.src = audioUrl;
+            feedbackAudioContainer.style.display = 'block';
+        }
     }
+    // вывод введеных слов через пробел, каждое из которых подсвечено определенным цветом
+    wordAccuracy.innerHTML = '';
 
     if (result.words && result.accuracy) {
-        result.words.forEach((word, index) => {
-            const accuracy = result.accuracy[index];
-            const wordElement = document.createElement('div');
-            wordElement.className = `word-box accuracy-${accuracy}`;
-            wordElement.textContent = word;
-            wordAccuracy.appendChild(wordElement);
-        });
+        const words = typeof result.words === 'string' ? result.words.split(' ') : result.words;
+        const accuracy = Array.isArray(result.accuracy) ? result.accuracy : [];
+
+        const minLength = Math.min(words.length, accuracy.length);
+
+        for (let i = 0; i < minLength; i++) {
+            const word = words[i];
+            const accuracyValue = parseInt(result.accuracy[i]);
+
+            const wordContainer = document.createElement('div');
+            wordContainer.style.display = 'inline-block';
+            wordContainer.style.margin = '0 5px';
+            wordContainer.style.padding = '2px 0';
+
+            // Правильная обработка всех случаев точности
+            if (accuracyValue === 0) {
+                // ВСЁ СЛОВО ЗЕЛЕНОЕ (правильное)
+                wordContainer.innerHTML = `
+                    <span style="
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 2px 5px;
+                        border-radius: 3px;
+                        display: inline-block;
+                    ">${word}</span>
+                `;
+            }
+            else if (accuracyValue === 1) {
+                // Первая половина КРАСНАЯ, вторая ЗЕЛЕНАЯ
+                const half = Math.ceil(word.length / 2);
+                wordContainer.innerHTML = `
+                    <span style="
+                        background-color: #F44336;
+                        color: white;
+                        padding: 2px 0 2px 5px;
+                        border-radius: 3px 0 0 3px;
+                        display: inline-block;
+                    ">${word.substring(0, half)}</span>
+                    <span style="
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 2px 5px 2px 0;
+                        border-radius: 0 3px 3px 0;
+                        display: inline-block;
+                    ">${word.substring(half)}</span>
+                `;
+            }
+            else if (accuracyValue === 2) {
+                // Первая половина ЗЕЛЕНАЯ, вторая КРАСНАЯ
+                const half = Math.ceil(word.length / 2);
+                wordContainer.innerHTML = `
+                    <span style="
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 2px 0 2px 5px;
+                        border-radius: 3px 0 0 3px;
+                        display: inline-block;
+                    ">${word.substring(0, half)}</span>
+                    <span style="
+                        background-color: #F44336;
+                        color: white;
+                        padding: 2px 5px 2px 0;
+                        border-radius: 0 3px 3px 0;
+                        display: inline-block;
+                    ">${word.substring(half)}</span>
+                `;
+            }
+            else {
+                // ВСЁ СЛОВО КРАСНОЕ (accuracyValue === 3 или некорректное значение)
+                wordContainer.innerHTML = `
+                    <span style="
+                        background-color: #F44336;
+                        color: white;
+                        padding: 2px 5px;
+                        border-radius: 3px;
+                        display: inline-block;
+                    ">${word}</span>
+                `;
+            }
+
+            wordAccuracy.appendChild(wordContainer);
+        }
     }
+}
+
+// Вспомогательные функции
+function base64ToBlob(base64) {
+    const byteCharacters = atob(base64);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    return new Blob(byteArrays, { type: 'audio/wav' });
 }
 
 // Данные из TXT
@@ -128,7 +233,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Показать случайное слово
     showRandomWord();
 });
-
 
 // Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', initRecording);
@@ -179,19 +283,14 @@ function getThemeByPartOfSpeech(partOfSpeech) {
 
 // Создание фильтров тем на основе данных
 function createThemeFilters() {
-    // Получаем все уникальные темы из данных
     const allThemes = ['Все темы', ...new Set(wordsData.map(word => word.theme))];
-
-    // Очищаем текущие фильтры
     themeFilter.innerHTML = '';
 
-    // Создаем кнопки для каждой темы
     allThemes.forEach(theme => {
         const li = document.createElement('li');
         const button = document.createElement('button');
         button.textContent = theme;
 
-        // Делаем "Все темы" активной по умолчанию
         if (theme === 'Все темы') {
             button.classList.add('active');
         }
@@ -200,7 +299,6 @@ function createThemeFilters() {
         themeFilter.appendChild(li);
     });
 
-    // Обновляем обработчики событий для новых кнопок
     updateThemeFilterListeners();
 }
 
@@ -210,13 +308,9 @@ function updateThemeFilterListeners() {
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
-            // Удаляем активный класс у всех кнопок
             buttons.forEach(btn => btn.classList.remove('active'));
-            // Добавляем активный класс текущей кнопке
             button.classList.add('active');
-            // Устанавливаем текущую тему
             currentTheme = button.textContent;
-            // Показываем случайное слово из выбранной темы
             showRandomWord();
         });
     });
@@ -224,58 +318,45 @@ function updateThemeFilterListeners() {
 
 // Установка обработчиков событий
 function setupEventListeners() {
-    // Кнопка "Следующее слово"
     nextWordBtn.addEventListener('click', showRandomWord);
-
-    // Кнопка "В избранное"
     favoriteBtn.addEventListener('click', toggleFavorite);
-
-    // Кнопка "Озвучить"
     speakBtn.addEventListener('click', speakCurrentWord);
 
-    // Кнопка перехода к избранному
     document.querySelector('header .btn-outline')?.addEventListener('click', function() {
         window.location.href = 'favorites.html';
     });
 }
 
 // Показать случайное слово
-// Показать случайное слово с анимацией
 async function showRandomWord() {
-    // Фильтрация слов по выбранной теме
+    sampleAudioContainer.style.display = 'none'
+    userAudioContainer.style.display = 'none'
+    feedbackAudioContainer.style.display = 'none'
+    resultContainer.style.display = 'none'
     let filteredWords = wordsData;
     if (currentTheme !== 'Все темы') {
         filteredWords = wordsData.filter(word => word.theme === currentTheme);
     }
 
-    // Если нет слов в выбранной теме
     if (filteredWords.length === 0) {
         alert('Нет слов в выбранной теме');
         return;
     }
 
-    // Добавляем класс для анимации исчезновения
     const wordCard = document.querySelector('.word-card');
     wordCard.classList.add('fade-out');
-
-    // Ждем завершения анимации исчезновения
     await new Promise(resolve => setTimeout(resolve, 300));
 
-    // Выбор случайного слова
     const randomIndex = Math.floor(Math.random() * filteredWords.length);
     currentWord = filteredWords[randomIndex];
 
-    // Обновление интерфейса
     updateWordCard(currentWord);
 
-    // Добавляем небольшую задержку перед появлением нового слова (100-300мс)
     await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200));
 
-    // Добавляем класс для анимации появления
     wordCard.classList.remove('fade-out');
     wordCard.classList.add('fade-in');
 
-    // Убираем класс анимации после завершения
     setTimeout(() => {
         wordCard.classList.remove('fade-in');
     }, 300);
@@ -286,13 +367,14 @@ async function showRandomWord() {
         localStorage.setItem('learnedWords', JSON.stringify(learnedWords));
     }
 }
+
 function getLearnedWords() {
     const learned = localStorage.getItem('learnedWords');
     return learned ? JSON.parse(learned) : [];
 }
+
 // Обновление карточки слова
 function updateWordCard(word) {
-    // Форматируем слово и перевод
     wordTitle.textContent = capitalizeFirstLetter(word.word);
     wordTheme.textContent = word.theme;
     wordTranslation.textContent = word.translation
@@ -300,32 +382,23 @@ function updateWordCard(word) {
         .map(trans => capitalizeFirstLetter(trans.trim()))
         .join(', ');
 
-    loadWordImage(currentWord.translation); // Вместо word.imageQuery
+    loadWordImage(currentWord.translation);
     checkIfFavorite(word.word);
 }
 
 // Озвучивание текущего слова
 async function speakCurrentWord() {
-    if (!currentWord?.word) {
-        console.error('Нет текущего слова для озвучивания');
-        return;
-    }
+    if (!currentWord?.word) return;
 
     speakBtn.disabled = true;
     speakBtn.innerHTML = 'Озвучивание...';
 
     try {
-        const response = await fetch('http://10.18.1.30:5000/synthesize', {
+        const response = await fetch('http://localhost:5002/synthesize', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: currentWord.word })
         });
-
-        if (!response.ok) {
-            throw new Error('Ошибка синтеза речи');
-        }
 
         const audioBlob = await response.blob();
         const audioUrl = URL.createObjectURL(audioBlob);
@@ -333,7 +406,6 @@ async function speakCurrentWord() {
         sampleAudioPlayer.src = audioUrl;
         sampleAudioContainer.style.display = 'block';
         sampleAudioPlayer.play();
-
     } catch (error) {
         console.error('Ошибка озвучивания:', error);
         alert('Не удалось озвучить слово');
@@ -349,13 +421,11 @@ async function speakCurrentWord() {
     }
 }
 
-
 async function loadWordImage(translation) {
-    const API_KEY = 'AIzaSyCuAJVk4zyqErRT-E3sfPdcoYI_adl5P9U'; // 🔴 Временный ключ (замените на защищенный)
+    const API_KEY = 'AIzaSyCuAJVk4zyqErRT-E3sfPdcoYI_adl5P9U';
     const CX = 'd3ee921230e0b4111';
 
     try {
-        // Берем первое слово из перевода до запятой
         const mainKeyword = translation.split(',')[0].trim();
         const query = encodeURIComponent(mainKeyword);
 
@@ -363,7 +433,6 @@ async function loadWordImage(translation) {
             `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX}&q=${query}&searchType=image`
         );
 
-        // Детальная обработка ошибок
         if (!response.ok) {
             const errorData = await response.json();
             console.error('Google API Error:', errorData.error.message);
@@ -380,7 +449,6 @@ async function loadWordImage(translation) {
         } else {
             setFallbackImage();
         }
-
     } catch (error) {
         console.error('Ошибка сети:', error);
         setFallbackImage();
@@ -390,8 +458,6 @@ async function loadWordImage(translation) {
 function setFallbackImage() {
     wordImage.src = 'https://dummyimage.com/600x400/ccc/fff&text=Изображение+не+найдено';
 }
-
-
 
 // Проверка, есть ли слово в избранном
 function checkIfFavorite(word) {
@@ -419,24 +485,19 @@ function checkIfFavorite(word) {
 
 // Переключение избранного
 function toggleFavorite() {
-    if (!currentWord?.word) {
-        console.error('No current word');
-        return;
-    }
+    if (!currentWord?.word) return;
 
     const favorites = getFavorites();
     const word = currentWord.word;
     const index = favorites.indexOf(word);
 
-    // Toggle favorite
     const newFavorites = index === -1
         ? [...favorites, word]
         : favorites.filter((_, i) => i !== index);
 
-    saveFavorites(newFavorites); // <-- Используем обновленный массив
-    checkIfFavorite(word); // Обновляем UI
+    saveFavorites(newFavorites);
+    checkIfFavorite(word);
 
-    // Добавляем синхронизацию для страницы избранного
     if (window.location.pathname.includes('favorites.html')) {
         displayFavorites();
     }
