@@ -10,17 +10,107 @@ const nextWordBtn = document.querySelector('.btn-primary');
 const themeFilterButtons = document.querySelectorAll('.theme-filter button');
 const themeFilter = document.querySelector('.theme-filter');
 const speakBtn = document.querySelector('.speak-btn');
-const startRecordBtn = document.getElementById('startRecord');
-const checkPronunciationBtn = document.getElementById('checkPronunciation');
-const userAudioPlayer = document.getElementById('userAudioPlayer');
-const resultContainer = document.getElementById('resultContainer');
-const wordAccuracy = document.getElementById('wordAccuracy');
-const resultText = document.getElementById('resultText');
-
 let mediaRecorder;
 let audioChunks = [];
 let isRecording = false;
 let userAudioBlob = null;
+const recordBtn = document.getElementById('recordBtn');
+const checkBtn = document.getElementById('checkBtn');
+const userAudioPlayer = document.getElementById('userAudioPlayer');
+const resultContainer = document.getElementById('resultContainer');
+const resultText = document.getElementById('resultText');
+const wordAccuracy = document.getElementById('wordAccuracy');
+const sampleAudioContainer = document.getElementById('sampleAudioContainer');
+const sampleAudioPlayer = document.getElementById('sampleAudioPlayer');
+
+function initRecording() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        recordBtn.disabled = true;
+        console.error('Браузер не поддерживает запись звука');
+    }
+}
+
+recordBtn.addEventListener('click', async function() {
+    if (!isRecording) {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+
+            mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+
+            mediaRecorder.onstop = () => {
+                userAudioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                userAudioPlayer.src = URL.createObjectURL(userAudioBlob);
+                document.getElementById('userAudioContainer').style.display = 'block';
+                checkBtn.disabled = false;
+                stream.getTracks().forEach(track => track.stop());
+            };
+
+            mediaRecorder.start();
+            isRecording = true;
+            recordBtn.textContent = 'Остановить запись';
+            checkBtn.disabled = true;
+        } catch (error) {
+            console.error('Ошибка записи:', error);
+        }
+    } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        recordBtn.textContent = 'Начать запись';
+    }
+});
+
+// Обработчик проверки произношения
+checkBtn.addEventListener('click', async function() {
+    if (!currentWord || !userAudioBlob) return;
+
+    checkBtn.disabled = true;
+    checkBtn.textContent = 'Проверка...';
+
+    try {
+        const formData = new FormData();
+        formData.append('text', currentWord.word);
+        formData.append('audio', userAudioBlob, 'recording.wav');
+
+        const response = await fetch('http://localhost:5001/check_pronunciation', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        displayPronunciationResult(result);
+    } catch (error) {
+        console.error('Ошибка проверки:', error);
+    } finally {
+        checkBtn.disabled = false;
+        checkBtn.textContent = 'Проверить';
+    }
+});
+
+// Отображение результатов проверки
+function displayPronunciationResult(result) {
+    resultContainer.style.display = 'block';
+    wordAccuracy.innerHTML = '';
+
+    if (result.result === "correct") {
+        resultText.textContent = "✅ Правильное произношение!";
+        resultText.style.color = "green";
+    } else {
+        resultText.textContent = "❌ Нужно поработать над произношением";
+        resultText.style.color = "red";
+    }
+
+    if (result.words && result.accuracy) {
+        result.words.forEach((word, index) => {
+            const accuracy = result.accuracy[index];
+            const wordElement = document.createElement('div');
+            wordElement.className = `word-box accuracy-${accuracy}`;
+            wordElement.textContent = word;
+            wordAccuracy.appendChild(wordElement);
+        });
+    }
+}
 
 // Данные из TXT
 let wordsData = [];
@@ -38,92 +128,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Показать случайное слово
     showRandomWord();
 });
-// Инициализация записи
-async function initRecording() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
 
-        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-
-        mediaRecorder.onstop = () => {
-            userAudioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-            userAudioPlayer.src = URL.createObjectURL(userAudioBlob);
-            document.getElementById('userAudioContainer').style.display = 'block';
-            checkPronunciationBtn.disabled = false;
-        };
-    } catch (error) {
-        console.error('Ошибка доступа к микрофону:', error);
-    }
-}
-
-// Обработчик кнопки записи
-startRecordBtn.addEventListener('click', () => {
-    if (!isRecording) {
-        audioChunks = [];
-        mediaRecorder.start();
-        isRecording = true;
-        startRecordBtn.textContent = 'Остановить запись';
-        startRecordBtn.classList.add('recording');
-        resultContainer.style.display = 'none';
-    } else {
-        mediaRecorder.stop();
-        isRecording = false;
-        startRecordBtn.textContent = 'Записать снова';
-        startRecordBtn.classList.remove('recording');
-    }
-});
-
-// Обработчик проверки произношения
-checkPronunciationBtn.addEventListener('click', async () => {
-    if (!currentWord || !userAudioBlob) return;
-
-    checkPronunciationBtn.disabled = true;
-    checkPronunciationBtn.textContent = 'Проверка...';
-
-    try {
-        const formData = new FormData();
-        formData.append('text', currentWord.word);
-        formData.append('audio', userAudioBlob, 'recording.wav');
-
-        const response = await fetch('http://localhost:5001/check_pronunciation', {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.json();
-        showPronunciationResult(result);
-    } catch (error) {
-        console.error('Ошибка проверки:', error);
-        resultText.textContent = 'Ошибка при проверке произношения';
-        resultText.style.color = 'var(--error)';
-    } finally {
-        checkPronunciationBtn.disabled = false;
-        checkPronunciationBtn.textContent = 'Проверить';
-    }
-});
-
-// Функция отображения результатов
-function showPronunciationResult(result) {
-    resultContainer.style.display = 'block';
-    wordAccuracy.innerHTML = '';
-
-    if (result.result === "correct") {
-        resultText.textContent = "✅ Правильное произношение!";
-        resultText.style.color = "var(--success)";
-    } else {
-        resultText.textContent = "❌ Требуется улучшение произношения";
-        resultText.style.color = "var(--error)";
-
-        result.words.forEach((word, index) => {
-            const accuracy = result.accuracy[index];
-            const wordElement = document.createElement('span');
-            wordElement.className = `accuracy-${accuracy}`;
-            wordElement.textContent = word;
-            wordAccuracy.appendChild(wordElement);
-        });
-    }
-}
 
 // Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', initRecording);
@@ -134,15 +139,14 @@ async function loadWordsData() {
         const response = await fetch('../tatar_words.json');
         const jsonData = await response.json();
 
-        // Преобразование структуры JSON в нужный формат
         wordsData = jsonData.map(item => ({
             word: item.word,
-            partOfSpeech: item.type, // переименовываем type в partOfSpeech
+            partOfSpeech: item.type,
             translation: item.translation,
-            example: "", // оставляем пустым, если нет в JSON
+            example: "",
             theme: getThemeByPartOfSpeech(item.type),
             speachWord: item.word,
-            imageQuery: item.translation.split(',')[0].trim() // первое значение перевода
+            imageQuery: item.translation.split(',')[0].trim()
         }));
 
         createThemeFilters();
@@ -302,51 +306,49 @@ function updateWordCard(word) {
 
 // Озвучивание текущего слова
 async function speakCurrentWord() {
-    if (!currentWord) return;
+    if (!currentWord?.word) {
+        console.error('Нет текущего слова для озвучивания');
+        return;
+    }
 
-    const btn = speakBtn;
-    const originalContent = btn.innerHTML;
+    speakBtn.disabled = true;
+    speakBtn.innerHTML = 'Озвучивание...';
 
     try {
-        // Показываем состояние загрузки
-        btn.disabled = true;
-        btn.innerHTML = `
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-            </svg>
-            Озвучивается...
-        `;
-
-        // Отправляем запрос на сервер для синтеза речи
-        const response = await fetch('http://localhost:5000/synthesize', {
+        const response = await fetch('http://10.18.1.30:5000/synthesize', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ text: currentWord.speachWord })
+            body: JSON.stringify({ text: currentWord.word })
         });
 
         if (!response.ok) {
-            const err = await response.json();
-            throw new Error(err.error || 'Ошибка сервера');
+            throw new Error('Ошибка синтеза речи');
         }
 
-        // Получаем аудио и воспроизводим
         const audioBlob = await response.blob();
         const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audio.play();
+
+        sampleAudioPlayer.src = audioUrl;
+        sampleAudioContainer.style.display = 'block';
+        sampleAudioPlayer.play();
 
     } catch (error) {
         console.error('Ошибка озвучивания:', error);
-        alert(error.message || 'Ошибка при озвучивании слова');
+        alert('Не удалось озвучить слово');
     } finally {
-        // Восстанавливаем исходное состояние кнопки
-        btn.disabled = false;
-        btn.innerHTML = originalContent;
+        speakBtn.disabled = false;
+        speakBtn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+            </svg>
+            Озвучить
+        `;
     }
 }
+
 
 async function loadWordImage(translation) {
     const API_KEY = 'AIzaSyCuAJVk4zyqErRT-E3sfPdcoYI_adl5P9U'; // 🔴 Временный ключ (замените на защищенный)
