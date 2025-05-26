@@ -30,36 +30,52 @@ function removeFromFavorites(word) {
     return favorites;
 }
 
-// Функция для озвучивания слова
-function speakWord(word) {
-    if (!word || !word.word) return;
 
-    // Проверяем поддержку Web Speech API
-    if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(word.word);
+async function speakWord(word) {
+    if (!word) return;
 
-        // Устанавливаем язык (можно попробовать разные варианты)
-        utterance.lang = 'tr-TR'; // Турецкий как приближение к татарскому
-        // Или попробовать русский, если турецкий не работает хорошо
-        // utterance.lang = 'ru-RU';
+    const btn = document.querySelector(`.speak-favorite-btn[data-word="${word.word}"]`);
+    if (!btn) return;
 
-        // Настройки голоса
-        utterance.rate = 0.9; // Скорость речи
-        utterance.pitch = 1; // Высота тона
+    const originalContent = btn.innerHTML;
 
-        // Попытка найти подходящий голос
-        const voices = window.speechSynthesis.getVoices();
-        const preferredVoice = voices.find(voice =>
-            voice.lang.includes('tr') || voice.lang.includes('ru'));
+    try {
+        // Показываем состояние загрузки
+        btn.disabled = true;
+        btn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+            </svg>
+        `;
 
-        if (preferredVoice) {
-            utterance.voice = preferredVoice;
+        // Отправляем запрос на сервер для синтеза речи
+        const response = await fetch('http://localhost:5000/synthesize', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text: word.speachWord })
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error || 'Ошибка сервера');
         }
 
-        // Озвучивание
-        window.speechSynthesis.speak(utterance);
-    } else {
-        alert('Ваш браузер не поддерживает озвучивание текста. Попробуйте использовать Chrome или Edge.');
+        // Получаем аудио и воспроизводим
+        const audioBlob = await response.blob();
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+
+    } catch (error) {
+        console.error('Ошибка озвучивания:', error);
+        alert(error.message || 'Ошибка при озвучивании слова');
+    } finally {
+        // Восстанавливаем исходное состояние кнопки
+        btn.disabled = false;
+        btn.innerHTML = originalContent;
     }
 }
 
@@ -76,6 +92,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Установка обработчиков событий
     setupEventListeners();
+
 });
 
 function getNoun(number, one, two, five) {
@@ -256,5 +273,9 @@ function displayFavorites() {
             displayFavorites();
             initThemeFilters();
         });
+    });
+
+    speakBtn.addEventListener('click', () => {
+        speakWord(word);
     });
 }

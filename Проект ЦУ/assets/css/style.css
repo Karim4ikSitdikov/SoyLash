@@ -1151,3 +1151,8 @@ header {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
+
+.speak-favorite-btn[disabled] {
+    opacity: 0.7;
+    cursor: wait;
+}
