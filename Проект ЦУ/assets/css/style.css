@@ -1251,3 +1251,16 @@ button.recording {
     margin-right: 8px; /* Отступ иконок */
     vertical-align: middle; /* Выравнивание по центру */
 }
+
+.word-box {
+    display: inline-block;
+    margin: 2px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: white;
+}
+
+.word-box span {
+    padding: 2px 5px;
+    border-radius: 3px;
+}

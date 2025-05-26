@@ -7,52 +7,58 @@ document.addEventListener('DOMContentLoaded', function () {
     const audioPlayer = document.getElementById('audioPlayer');
     const userAudioContainer = document.getElementById('userAudioContainer');
     const userAudioPlayer = document.getElementById('userAudioPlayer');
+    const feedbackAudioContainer = document.getElementById('feedbackAudioContainer');
+    const feedbackAudioPlayer = document.getElementById('feedbackAudioPlayer');
     const resultContainer = document.getElementById('resultContainer');
     const resultText = document.getElementById('resultText');
     const wordAccuracy = document.getElementById('wordAccuracy');
+    const errorElement = document.getElementById('error');
 
     let mediaRecorder;
     let audioChunks = [];
     let isRecording = false;
     let userAudioBlob = null;
 
-    // Инициализация записи
-    async function initRecording() {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder = new MediaRecorder(stream);
-
-            mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-            mediaRecorder.onstop = () => {
-                userAudioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                userAudioPlayer.src = URL.createObjectURL(userAudioBlob);
-                userAudioContainer.style.display = 'block';
-                checkBtn.disabled = false;
-            };
-        } catch (error) {
-            console.error('Ошибка доступа к микрофону:', error);
-        }
+    // Проверка поддержки записи
+    if (!navigator.mediaDevices?.getUserMedia) {
+        recordBtn.disabled = true;
+        showError('Ваш браузер не поддерживает запись звука');
     }
 
-    // Обработчики событий
-    recordBtn.addEventListener('click', toggleRecording);
-    synthesizeBtn.addEventListener('click', synthesizeSpeech);
-    checkBtn.addEventListener('click', checkPronunciation);
+    function showError(message) {
+        errorElement.textContent = message;
+    }
 
-    initRecording();
-
-    async function toggleRecording() {
+    // Инициализация записи
+    recordBtn.addEventListener('click', async () => {
         if (!isRecording) {
-            audioChunks = [];
-            mediaRecorder.start();
-            isRecording = true;
-            recordBtn.innerHTML = `
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-                    <path d="M6 4h12v16H6z"/>
-                </svg>
-                Остановить запись
-            `;
-            resultContainer.style.display = 'none';
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    userAudioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    userAudioPlayer.src = URL.createObjectURL(userAudioBlob);
+                    userAudioContainer.style.display = 'block';
+                    checkBtn.disabled = false;
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                mediaRecorder.start();
+                isRecording = true;
+                recordBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                        <path d="M6 4h12v16H6z"/>
+                    </svg>
+                    Остановить запись
+                `;
+                resultContainer.style.display = 'none';
+                feedbackAudioContainer.style.display = 'none';
+            } catch (error) {
+                showError('Ошибка доступа к микрофону: ' + error.message);
+            }
         } else {
             mediaRecorder.stop();
             isRecording = false;
@@ -63,11 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 Записать снова
             `;
         }
-    }
+    });
 
-    async function synthesizeSpeech() {
+    // Синтез речи
+    synthesizeBtn.addEventListener('click', async () => {
         const text = textInput.value.trim();
-        if (!text) return;
+        if (!text) {
+            showError('Введите текст для озвучивания');
+            return;
+        }
 
         synthesizeBtn.disabled = true;
         synthesizeBtn.innerHTML = 'Озвучивается...';
@@ -83,14 +93,15 @@ document.addEventListener('DOMContentLoaded', function () {
             audioPlayer.src = URL.createObjectURL(audioBlob);
             audioContainer.style.display = 'block';
         } catch (error) {
-            console.error('Ошибка синтеза:', error);
+            showError('Ошибка синтеза: ' + error.message);
         } finally {
             synthesizeBtn.disabled = false;
             synthesizeBtn.innerHTML = 'Озвучить образец';
         }
-    }
+    });
 
-    async function checkPronunciation() {
+    // Проверка произношения
+    checkBtn.addEventListener('click', async () => {
         if (!textInput.value.trim() || !userAudioBlob) return;
 
         checkBtn.disabled = true;
@@ -99,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             const formData = new FormData();
             formData.append('text', textInput.value);
-            formData.append('audio', userAudioBlob);
+            formData.append('audio', userAudioBlob, 'recording.wav');
 
             const response = await fetch('http://localhost:5001/check_pronunciation', {
                 method: 'POST',
@@ -107,34 +118,76 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             const result = await response.json();
-            showResults(result);
+            displayResults(result);
         } catch (error) {
-            console.error('Ошибка проверки:', error);
-            resultText.textContent = 'Ошибка при проверке произношения';
-            resultText.style.color = '#dc3545';
+            showError('Ошибка проверки: ' + error.message);
         } finally {
             checkBtn.disabled = false;
             checkBtn.textContent = 'Проверить произношение';
         }
-    }
+    });
 
-    function showResults(result) {
+    // Отображение результатов
+    function displayResults(result) {
         resultContainer.style.display = 'block';
         wordAccuracy.innerHTML = '';
 
         if (result.result === "correct") {
             resultText.textContent = "✅ Правильное произношение!";
             resultText.style.color = "#4CAF50";
+            feedbackAudioContainer.style.display = 'none';
         } else {
             resultText.textContent = "❌ Требуется улучшение произношения";
             resultText.style.color = "#dc3545";
 
+            if (result.feedback_audio) {
+                const audioBlob = base64ToBlob(result.feedback_audio);
+                feedbackAudioPlayer.src = URL.createObjectURL(audioBlob);
+                feedbackAudioContainer.style.display = 'block';
+            }
+
+            // Обработка цветовых меток
             result.words.forEach((word, i) => {
-                const span = document.createElement('span');
-                span.className = `accuracy-${result.accuracy[i]}`;
-                span.textContent = word;
-                wordAccuracy.appendChild(span);
+                const accuracy = result.accuracy[i] || 3;
+                const wordContainer = document.createElement('div');
+                wordContainer.className = 'word-box';
+
+                if (accuracy === 0) {
+                    wordContainer.style.backgroundColor = '#4CAF50';
+                } else if (accuracy === 1) {
+                    wordContainer.innerHTML = colorizeWord(word, 'start');
+                } else if (accuracy === 2) {
+                    wordContainer.innerHTML = colorizeWord(word, 'end');
+                } else {
+                    wordContainer.style.backgroundColor = '#F44336';
+                }
+
+                wordContainer.textContent = word;
+                wordAccuracy.appendChild(wordContainer);
             });
         }
+    }
+
+    // Вспомогательные функции
+    function base64ToBlob(base64) {
+        const byteCharacters = atob(base64);
+        const byteArrays = [];
+        for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+            const slice = byteCharacters.slice(offset, offset + 512);
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        return new Blob(byteArrays, { type: 'audio/wav' });
+    }
+
+    function colorizeWord(word, part) {
+        const half = Math.ceil(word.length / 2);
+        return part === 'start'
+            ? `<span style="background:#F44336;color:white">${word.slice(0, half)}</span><span style="background:#4CAF50;color:white">${word.slice(half)}</span>`
+            : `<span style="background:#4CAF50;color:white">${word.slice(0, half)}</span><span style="background:#F44336;color:white">${word.slice(half)}</span>`;
     }
 });
