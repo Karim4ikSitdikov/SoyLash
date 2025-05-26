@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Проверка произношения</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header>
+    <h1><a href="./index.html">SoyLash</a></h1>
+    <nav>
+        <ul class="main-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Обучение<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="wordLearning.html">Тренировка произношения</a></li>
+                    <li><a href="WordSpelling.html">Проверка произношения (ручной ввод)</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="favorites.html" class="dropdown-toggle">Избранное</a>
+            </li>
+            <li>
+                <a href="translator.html" class="dropdown-toggle">Переводчик</a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="WordQuiz.html">Угадай перевод</a></li>
+                    <li><a href="ImageQuiz.html">Угадай что на картинке</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="main-container">
+    <main style="max-width: 800px; margin: 0 auto;">
+        <div class="word-card">
+            <h2 class="card-title" style="margin-bottom: 30px;">Проверка произношения</h2>
+
+            <div class="translator-card">
+                <textarea
+                        id="textInput"
+                        class="translation-input"
+                        placeholder="Введите текст для проверки..."
+                ></textarea>
+
+                <div class="audio-controls" style="margin-top: 20px;">
+                    <button class="btn-outline" id="synthesizeBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                        Озвучить образец
+                    </button>
+
+                    <button class="btn-outline" id="recordBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v3m0 15v-3m-7-7h3m15 0h-3M5.6 5.6l2.1 2.1m9.8 9.8l2.1 2.1"/>
+                        </svg>
+                        Записать произношение
+                    </button>
+                </div>
+
+                <div class="audio-container" id="audioContainer" style="display: none;">
+                    <h3 class="word-theme">Образец произношения:</h3>
+                    <audio id="audioPlayer" controls class="word-description"></audio>
+                </div>
+
+                <div class="audio-container" id="userAudioContainer" style="display: none;">
+                    <h3 class="word-theme">Ваша запись:</h3>
+                    <audio id="userAudioPlayer" controls class="word-description"></audio>
+                </div>
+
+                <div class="word-actions" style="margin-top: 30px;">
+                    <button class="btn-primary" id="checkBtn" disabled>Проверить произношение</button>
+                </div>
+
+                <div id="resultContainer" class="result-container" style="display: none;">
+                    <div id="wordAccuracy" class="word-accuracy"></div>
+                    <p id="resultText" class="feedback-message"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/WordSpelling.js"></script>
+</body>
+</html>

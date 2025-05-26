@@ -30,7 +30,7 @@ function removeFromFavorites(word) {
     return favorites;
 }
 
-
+// favorites.js (обновленная функция озвучивания)
 async function speakWord(word) {
     if (!word) return;
 
@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Установка обработчиков событий
     setupEventListeners();
-
 });
 
 function getNoun(number, one, two, five) {
@@ -273,9 +272,5 @@ function displayFavorites() {
             displayFavorites();
             initThemeFilters();
         });
-    });
-
-    speakBtn.addEventListener('click', () => {
-        speakWord(word);
     });
 }

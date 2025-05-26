@@ -10,6 +10,17 @@ const nextWordBtn = document.querySelector('.btn-primary');
 const themeFilterButtons = document.querySelectorAll('.theme-filter button');
 const themeFilter = document.querySelector('.theme-filter');
 const speakBtn = document.querySelector('.speak-btn');
+const startRecordBtn = document.getElementById('startRecord');
+const checkPronunciationBtn = document.getElementById('checkPronunciation');
+const userAudioPlayer = document.getElementById('userAudioPlayer');
+const resultContainer = document.getElementById('resultContainer');
+const wordAccuracy = document.getElementById('wordAccuracy');
+const resultText = document.getElementById('resultText');
+
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
+let userAudioBlob = null;
 
 // Данные из TXT
 let wordsData = [];
@@ -27,35 +38,113 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Показать случайное слово
     showRandomWord();
 });
+// Инициализация записи
+async function initRecording() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+
+        mediaRecorder.onstop = () => {
+            userAudioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            userAudioPlayer.src = URL.createObjectURL(userAudioBlob);
+            document.getElementById('userAudioContainer').style.display = 'block';
+            checkPronunciationBtn.disabled = false;
+        };
+    } catch (error) {
+        console.error('Ошибка доступа к микрофону:', error);
+    }
+}
+
+// Обработчик кнопки записи
+startRecordBtn.addEventListener('click', () => {
+    if (!isRecording) {
+        audioChunks = [];
+        mediaRecorder.start();
+        isRecording = true;
+        startRecordBtn.textContent = 'Остановить запись';
+        startRecordBtn.classList.add('recording');
+        resultContainer.style.display = 'none';
+    } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        startRecordBtn.textContent = 'Записать снова';
+        startRecordBtn.classList.remove('recording');
+    }
+});
+
+// Обработчик проверки произношения
+checkPronunciationBtn.addEventListener('click', async () => {
+    if (!currentWord || !userAudioBlob) return;
+
+    checkPronunciationBtn.disabled = true;
+    checkPronunciationBtn.textContent = 'Проверка...';
+
+    try {
+        const formData = new FormData();
+        formData.append('text', currentWord.word);
+        formData.append('audio', userAudioBlob, 'recording.wav');
+
+        const response = await fetch('http://localhost:5001/check_pronunciation', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        showPronunciationResult(result);
+    } catch (error) {
+        console.error('Ошибка проверки:', error);
+        resultText.textContent = 'Ошибка при проверке произношения';
+        resultText.style.color = 'var(--error)';
+    } finally {
+        checkPronunciationBtn.disabled = false;
+        checkPronunciationBtn.textContent = 'Проверить';
+    }
+});
+
+// Функция отображения результатов
+function showPronunciationResult(result) {
+    resultContainer.style.display = 'block';
+    wordAccuracy.innerHTML = '';
+
+    if (result.result === "correct") {
+        resultText.textContent = "✅ Правильное произношение!";
+        resultText.style.color = "var(--success)";
+    } else {
+        resultText.textContent = "❌ Требуется улучшение произношения";
+        resultText.style.color = "var(--error)";
+
+        result.words.forEach((word, index) => {
+            const accuracy = result.accuracy[index];
+            const wordElement = document.createElement('span');
+            wordElement.className = `accuracy-${accuracy}`;
+            wordElement.textContent = word;
+            wordAccuracy.appendChild(wordElement);
+        });
+    }
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', initRecording);
 
 // Загрузка данных из TXT
 async function loadWordsData() {
     try {
-        const response = await fetch('../soylash_data.txt');
-        const textData = await response.text();
+        const response = await fetch('../tatar_words.json');
+        const jsonData = await response.json();
 
-        // Парсинг текстовых данных
-        const lines = textData.split('\n');
-        wordsData = lines.map(line => {
-            const [word, partOfSpeech, frequency, translation, example] = line.split(';');
+        // Преобразование структуры JSON в нужный формат
+        wordsData = jsonData.map(item => ({
+            word: item.word,
+            partOfSpeech: item.type, // переименовываем type в partOfSpeech
+            translation: item.translation,
+            example: "", // оставляем пустым, если нет в JSON
+            theme: getThemeByPartOfSpeech(item.type),
+            speachWord: item.word,
+            imageQuery: item.translation.split(',')[0].trim() // первое значение перевода
+        }));
 
-            // Форматирование слова и перевода - первая буква заглавная
-            const formattedWord = capitalizeFirstLetter(word.trim());
-            const formattedTranslation = capitalizeFirstLetter(translation.trim());
-            const formattedExample = example ? capitalizeFirstLetter(example.trim()) : '';
-
-            return {
-                word: formattedWord,
-                partOfSpeech: partOfSpeech.trim(),
-                translation: formattedTranslation,
-                example: formattedExample,
-                theme: getThemeByPartOfSpeech(partOfSpeech.trim()),
-                speachWord: formattedWord, // Для озвучивания
-                imageQuery: formattedTranslation // Для поиска изображений используем перевод
-            };
-        }).filter(word => word.word); // Фильтрация пустых строк
-
-        // После загрузки данных создаем фильтры
         createThemeFilters();
     } catch (error) {
         console.error('Ошибка загрузки данных:', error);
@@ -199,26 +288,16 @@ function getLearnedWords() {
 }
 // Обновление карточки слова
 function updateWordCard(word) {
-    wordTitle.textContent = word.word;
-    transcription.textContent = `[${word.word.toLowerCase()}]`;
+    // Форматируем слово и перевод
+    wordTitle.textContent = capitalizeFirstLetter(word.word);
     wordTheme.textContent = word.theme;
-    wordTranslation.textContent = word.translation;
-    wordDescription.textContent = word.example || `Пример использования слова "${word.word}" в предложении`;
+    wordTranslation.textContent = word.translation
+        .split(',')
+        .map(trans => capitalizeFirstLetter(trans.trim()))
+        .join(', ');
 
-    // Загрузка изображения из Unsplash (теперь по переводу слова)
-    loadWordImage(word.imageQuery);
-
-    // Проверка, есть ли слово в избранном
+    loadWordImage(currentWord.translation); // Вместо word.imageQuery
     checkIfFavorite(word.word);
-
-    // Обновляем кнопку озвучивания
-    speakBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-        </svg>
-        Озвучить
-    `;
 }
 
 // Озвучивание текущего слова
@@ -269,32 +348,48 @@ async function speakCurrentWord() {
     }
 }
 
-// Загрузка изображения слова
-async function loadWordImage(query) {
-    try {
-        const searchQuery = `${query}`;
-        const response = await fetch(`https://api.unsplash.com/photos/random?query=${encodeURIComponent(searchQuery)}&orientation=landscape&client_id=c0DDTVCG7lctOJTWJIvZ_F6J4ey07hO1MzmKfIgZNrc`);
+async function loadWordImage(translation) {
+    const API_KEY = 'AIzaSyCuAJVk4zyqErRT-E3sfPdcoYI_adl5P9U'; // 🔴 Временный ключ (замените на защищенный)
+    const CX = 'd3ee921230e0b4111';
 
-        if (!response.ok) throw new Error('Ошибка API');
+    try {
+        // Берем первое слово из перевода до запятой
+        const mainKeyword = translation.split(',')[0].trim();
+        const query = encodeURIComponent(mainKeyword);
+
+        const response = await fetch(
+            `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX}&q=${query}&searchType=image`
+        );
+
+        // Детальная обработка ошибок
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Google API Error:', errorData.error.message);
+            setFallbackImage();
+            return;
+        }
 
         const data = await response.json();
 
-        if (data && data.urls && data.urls.regular) {
-            wordImage.src = data.urls.regular;
-            wordImage.alt = `Изображение для слова: ${query}`;
+        if (data.items?.length > 0) {
+            const randomIndex = Math.floor(Math.random() * data.items.length);
+            wordImage.src = data.items[randomIndex].link;
+            wordImage.alt = `Изображение: ${mainKeyword}`;
         } else {
             setFallbackImage();
         }
+
     } catch (error) {
-        console.error('Ошибка загрузки изображения:', error);
+        console.error('Ошибка сети:', error);
         setFallbackImage();
     }
 }
 
 function setFallbackImage() {
-    wordImage.src = 'https://images.unsplash.com/photo-1582139329536-e7284fece509?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80';
-    wordImage.alt = 'Татарская культура - изображение по умолчанию';
+    wordImage.src = 'https://dummyimage.com/600x400/ccc/fff&text=Изображение+не+найдено';
 }
+
+
 
 // Проверка, есть ли слово в избранном
 function checkIfFavorite(word) {
@@ -322,25 +417,27 @@ function checkIfFavorite(word) {
 
 // Переключение избранного
 function toggleFavorite() {
-    if (!currentWord) return;
+    if (!currentWord?.word) {
+        console.error('No current word');
+        return;
+    }
 
     const favorites = getFavorites();
     const word = currentWord.word;
     const index = favorites.indexOf(word);
 
-    if (index === -1) {
-        // Добавляем в избранное
-        favorites.push(word);
-    } else {
-        // Удаляем из избранного
-        favorites.splice(index, 1);
+    // Toggle favorite
+    const newFavorites = index === -1
+        ? [...favorites, word]
+        : favorites.filter((_, i) => i !== index);
+
+    saveFavorites(newFavorites); // <-- Используем обновленный массив
+    checkIfFavorite(word); // Обновляем UI
+
+    // Добавляем синхронизацию для страницы избранного
+    if (window.location.pathname.includes('favorites.html')) {
+        displayFavorites();
     }
-
-    // Сохраняем изменения
-    saveFavorites(favorites);
-
-    // Обновляем состояние кнопки
-    checkIfFavorite(word);
 }
 
 // Общие функции для работы с LocalStorage

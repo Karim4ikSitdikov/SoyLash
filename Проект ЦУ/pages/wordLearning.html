@@ -72,10 +72,35 @@
             </div>
 
             <div class="word-translation">Слово</div>
-            <p class="word-description">Основная единица языка, служащая для именования понятий, предметов, лиц, действий, состояний, признаков, связей, отношений, оценок.</p>
+            <p class="word-description" style="display: none">Основная единица языка, служащая для именования понятий, предметов, лиц, действий, состояний, признаков, связей, отношений, оценок.</p>
 
             <div class="word-actions">
                 <button class="btn-primary">Следующее слово</button>
+            </div>
+            <div class="pronunciation-check">
+                <div class="audio-controls">
+                    <button class="btn-outline" id="startRecord">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 2v3m0 15v-3m-7-7h3m15 0h-3M5.6 5.6l2.1 2.1m9.8 9.8l2.1 2.1"/>
+                        </svg>
+                        Записать произношение
+                    </button>
+                    <button class="btn-primary" id="checkPronunciation" disabled>
+                        Проверить
+                    </button>
+                </div>
+
+                <div class="audio-feedback">
+                    <div id="userAudioContainer" class="audio-container" style="display: none;">
+                        <h3>Ваша запись:</h3>
+                        <audio id="userAudioPlayer" controls></audio>
+                    </div>
+
+                    <div id="resultContainer" class="result-container" style="display: none;">
+                        <div id="wordAccuracy" class="word-accuracy"></div>
+                        <p id="resultText" class="feedback-message"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

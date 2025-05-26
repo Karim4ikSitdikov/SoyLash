@@ -1156,3 +1156,98 @@ header {
     opacity: 0.7;
     cursor: wait;
 }
+
+/* Pronunciation Check Section */
+.pronunciation-check {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.audio-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.audio-container {
+    margin: 20px 0;
+}
+
+.audio-container h3 {
+    color: var(--secondary);
+    margin-bottom: 10px;
+}
+
+.result-container {
+    padding: 15px;
+    background: var(--light);
+    border-radius: 8px;
+}
+
+.word-accuracy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.word-accuracy span {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.accuracy-0 { background: #4CAF50; color: white; }
+.accuracy-1 { background: #FFC107; color: black; }
+.accuracy-2 { background: #F44336; color: white; }
+
+.feedback-message {
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+button.recording {
+    background-color: var(--error);
+    color: white;
+}
+/* Добавить в конец style.css */
+.translation-input {
+    min-height: 250px; /* Увеличил высоту */
+    padding: 20px; /* Больше отступов */
+    font-size: 1.1rem; /* Крупнее текст */
+    line-height: 1.7; /* Улучшил межстрочный интервал */
+    border-width: 2px; /* Акцентная рамка */
+    transition: all 0.3s; /* Плавные изменения */
+}
+
+.translation-input:focus {
+    border-color: var(--secondary); /* Изменение цвета при фокусе */
+    box-shadow: 0 0 8px rgba(22, 96, 136, 0.2); /* Свечение */
+}
+
+@media (max-width: 768px) {
+    .translation-input {
+        min-height: 180px; /* Меньше высота на мобилках */
+        font-size: 1rem; /* Стандартный размер текста */
+        padding: 15px; /* Компактные отступы */
+    }
+}
+/* Добавить для кнопок записи */
+.audio-controls {
+    gap: 15px; /* Расстояние между кнопками */
+    margin: 25px 0; /* Отступы сверху/снизу */
+}
+
+.audio-controls button {
+    padding: 12px 25px; /* Крупнее кнопки */
+    font-size: 1rem; /* Единый размер текста */
+    flex-grow: 1; /* Равная ширина кнопок */
+}
+
+.audio-controls svg {
+    margin-right: 8px; /* Отступ иконок */
+    vertical-align: middle; /* Выравнивание по центру */
+}
