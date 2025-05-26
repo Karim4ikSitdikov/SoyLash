@@ -3,15 +3,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const synthesizeBtn = document.getElementById('synthesizeBtn');
     const recordBtn = document.getElementById('recordBtn');
     const checkBtn = document.getElementById('checkBtn');
-    const audioContainer = document.getElementById('audioContainer');
     const audioPlayer = document.getElementById('audioPlayer');
-    const userAudioContainer = document.getElementById('userAudioContainer');
     const userAudioPlayer = document.getElementById('userAudioPlayer');
-    const feedbackAudioContainer = document.getElementById('feedbackAudioContainer');
     const feedbackAudioPlayer = document.getElementById('feedbackAudioPlayer');
     const resultContainer = document.getElementById('resultContainer');
-    const resultText = document.getElementById('resultText');
     const wordAccuracy = document.getElementById('wordAccuracy');
+    const resultText = document.getElementById('resultText');
     const errorElement = document.getElementById('error');
 
     let mediaRecorder;
@@ -29,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         errorElement.textContent = message;
     }
 
-    // Инициализация записи
+    // Запись аудио
     recordBtn.addEventListener('click', async () => {
         if (!isRecording) {
             try {
@@ -41,33 +38,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 mediaRecorder.onstop = () => {
                     userAudioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                     userAudioPlayer.src = URL.createObjectURL(userAudioBlob);
-                    userAudioContainer.style.display = 'block';
+                    document.getElementById('userAudioContainer').style.display = 'block';
                     checkBtn.disabled = false;
                     stream.getTracks().forEach(track => track.stop());
                 };
 
                 mediaRecorder.start();
                 isRecording = true;
-                recordBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-                        <path d="M6 4h12v16H6z"/>
-                    </svg>
-                    Остановить запись
-                `;
-                resultContainer.style.display = 'none';
-                feedbackAudioContainer.style.display = 'none';
+                recordBtn.innerHTML = `Остановить запись`;
             } catch (error) {
                 showError('Ошибка доступа к микрофону: ' + error.message);
             }
         } else {
             mediaRecorder.stop();
             isRecording = false;
-            recordBtn.innerHTML = `
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2v3m0 15v-3m-7-7h3m15 0h-3M5.6 5.6l2.1 2.1m9.8 9.8l2.1 2.1"/>
-                </svg>
-                Записать снова
-            `;
+            recordBtn.innerHTML = `Записать снова`;
         }
     });
 
@@ -80,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         synthesizeBtn.disabled = true;
-        synthesizeBtn.innerHTML = 'Озвучивается...';
+        synthesizeBtn.textContent = 'Озвучивается...';
 
         try {
             const response = await fetch('http://localhost:5000/synthesize', {
@@ -91,12 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const audioBlob = await response.blob();
             audioPlayer.src = URL.createObjectURL(audioBlob);
-            audioContainer.style.display = 'block';
+            document.getElementById('audioContainer').style.display = 'block';
         } catch (error) {
             showError('Ошибка синтеза: ' + error.message);
         } finally {
             synthesizeBtn.disabled = false;
-            synthesizeBtn.innerHTML = 'Озвучить образец';
+            synthesizeBtn.textContent = 'Озвучить образец';
         }
     });
 
@@ -133,36 +118,61 @@ document.addEventListener('DOMContentLoaded', function () {
         wordAccuracy.innerHTML = '';
 
         if (result.result === "correct") {
-            resultText.textContent = "✅ Правильное произношение!";
+            resultText.textContent = "✅ Ваше произношение правильное!";
             resultText.style.color = "#4CAF50";
-            feedbackAudioContainer.style.display = 'none';
+            document.getElementById('feedbackAudioContainer').style.display = 'none';
         } else {
-            resultText.textContent = "❌ Требуется улучшение произношения";
+            resultText.textContent = "❌ Ваше произношение содержит ошибки";
             resultText.style.color = "#dc3545";
 
             if (result.feedback_audio) {
                 const audioBlob = base64ToBlob(result.feedback_audio);
                 feedbackAudioPlayer.src = URL.createObjectURL(audioBlob);
-                feedbackAudioContainer.style.display = 'block';
+                document.getElementById('feedbackAudioContainer').style.display = 'block';
             }
 
-            // Обработка цветовых меток
             result.words.forEach((word, i) => {
-                const accuracy = result.accuracy[i] || 3;
+                const accuracy = result.accuracy[i] ?? 3;
                 const wordContainer = document.createElement('div');
-                wordContainer.className = 'word-box';
+                wordContainer.style.display = 'inline-flex';
+                wordContainer.style.margin = '2px';
 
                 if (accuracy === 0) {
-                    wordContainer.style.backgroundColor = '#4CAF50';
-                } else if (accuracy === 1) {
-                    wordContainer.innerHTML = colorizeWord(word, 'start');
-                } else if (accuracy === 2) {
-                    wordContainer.innerHTML = colorizeWord(word, 'end');
+                    wordContainer.innerHTML = `
+                        <span style="
+                            background: #4CAF50;
+                            color: white;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                        ">${word}</span>
+                    `;
+                } else if (accuracy === 1 || accuracy === 2) {
+                    const half = Math.ceil(word.length / 2);
+                    wordContainer.innerHTML = `
+                        <span style="
+                            background: ${accuracy === 1 ? '#F44336' : '#4CAF50'};
+                            color: white;
+                            padding: 4px 0 4px 8px;
+                            border-radius: 4px 0 0 4px;
+                        ">${word.substring(0, half)}</span>
+                        <span style="
+                            background: ${accuracy === 1 ? '#4CAF50' : '#F44336'};
+                            color: white;
+                            padding: 4px 8px 4px 0;
+                            border-radius: 0 4px 4px 0;
+                        ">${word.substring(half)}</span>
+                    `;
                 } else {
-                    wordContainer.style.backgroundColor = '#F44336';
+                    wordContainer.innerHTML = `
+                        <span style="
+                            background: #F44336;
+                            color: white;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                        ">${word}</span>
+                    `;
                 }
 
-                wordContainer.textContent = word;
                 wordAccuracy.appendChild(wordContainer);
             });
         }
@@ -182,12 +192,5 @@ document.addEventListener('DOMContentLoaded', function () {
             byteArrays.push(byteArray);
         }
         return new Blob(byteArrays, { type: 'audio/wav' });
-    }
-
-    function colorizeWord(word, part) {
-        const half = Math.ceil(word.length / 2);
-        return part === 'start'
-            ? `<span style="background:#F44336;color:white">${word.slice(0, half)}</span><span style="background:#4CAF50;color:white">${word.slice(half)}</span>`
-            : `<span style="background:#4CAF50;color:white">${word.slice(0, half)}</span><span style="background:#F44336;color:white">${word.slice(half)}</span>`;
     }
 });

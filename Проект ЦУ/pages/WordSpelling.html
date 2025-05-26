@@ -18,12 +18,8 @@
                     <li><a href="WordSpelling.html">Проверка произношения (ручной ввод)</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="favorites.html" class="dropdown-toggle">Избранное</a>
-            </li>
-            <li>
-                <a href="translator.html" class="dropdown-toggle">Переводчик</a>
-            </li>
+            <li><a href="favorites.html" class="dropdown-toggle">Избранное</a></li>
+            <li><a href="translator.html" class="dropdown-toggle">Переводчик</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
                 <ul class="dropdown-menu">
@@ -35,12 +31,11 @@
     </nav>
 </header>
 
-<div class="main-container">
-    <main style="max-width: 800px; margin: 0 auto;">
-        <div class="word-card">
-            <h2 class="card-title" style="margin-bottom: 30px;">Проверка произношения</h2>
-
-            <div class="translator-card">
+<div class="main-container word-main">
+    <main>
+        <div class="word-card" style="height: 100%; display: flex; flex-direction: column;">
+            <h2 class="card-title" style="margin-bottom: 20px;">Проверка произношения</h2>
+            <div class="translator-card" style="flex: 1; display: flex; flex-direction: column;">
                 <textarea
                         id="textInput"
                         class="translation-input"
@@ -64,28 +59,27 @@
                     </button>
                 </div>
 
-                <div class="audio-container" id="audioContainer" style="display: none;">
-                    <h3 class="word-theme">Образец произношения:</h3>
-                    <audio id="audioPlayer" controls class="word-description"></audio>
-                </div>
+                <div style="flex: 1; overflow-y: auto; margin-top: 20px;">
+                    <div class="audio-container" id="audioContainer" style="display: none;">
+                        <h3 class="word-theme">Образец произношения:</h3>
+                        <audio id="audioPlayer" controls class="word-description"></audio>
+                    </div>
 
-                <div class="audio-container" id="userAudioContainer" style="display: none;">
-                    <h3 class="word-theme">Ваша запись:</h3>
-                    <audio id="userAudioPlayer" controls class="word-description"></audio>
-                </div>
+                    <div class="audio-container" id="userAudioContainer" style="display: none;">
+                        <h3 class="word-theme">Ваша запись:</h3>
+                        <audio id="userAudioPlayer" controls class="word-description"></audio>
+                    </div>
 
-                <div class="audio-container" id="feedbackAudioContainer" style="display: none;">
-                    <h3 class="word-theme">Исправленное произношение:</h3>
-                    <audio id="feedbackAudioPlayer" controls class="word-description"></audio>
-                </div>
+                    <div class="audio-container" id="feedbackAudioContainer" style="display: none;">
+                        <h3 class="word-theme">Исправленное произношение:</h3>
+                        <audio id="feedbackAudioPlayer" controls class="word-description"></audio>
+                    </div>
 
-                <div class="word-actions" style="margin-top: 30px;">
-                    <button class="btn-primary" id="checkBtn" disabled>Проверить произношение</button>
-                </div>
-
-                <div id="resultContainer" class="result-container" style="display: none;">
-                    <div id="wordAccuracy" class="word-accuracy"></div>
-                    <p id="resultText" class="feedback-message"></p>
+                    <div id="resultContainer" class="result-container" style="display: none;">
+                        <h3>Результат проверки:</h3>
+                        <div id="wordAccuracy" class="word-accuracy" style="flex-wrap: wrap; gap: 8px;"></div>
+                        <p id="resultText" class="feedback-message" style="margin-top: 15px;"></p>
+                    </div>
                 </div>
             </div>
         </div>
