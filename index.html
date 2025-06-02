@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Главная</title>
+    <link rel="icon" href="Проект%20ЦУ/assets/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Проект%20ЦУ/assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/unsplash-js@7.0.15/dist/unsplash-js.min.js"></script>
+</head>
+
+<body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(102193999, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/102193999" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    <div class="container">
+        <header>
+            <a href="index.html" class="header_logo"><img src="Проект%20ЦУ/assets/logo.png" alt="" class="logo"><h1>oyLash</h1></a>
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Обучение<svg width="12" height="12" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Проект ЦУ/pages/wordLearning.html">Тренировка произношения</a></li>
+                            <li><a href="Проект ЦУ/pages/WordSpelling.html">Тренировка произношения (ручной ввод)</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="Проект ЦУ/pages/favorites.html" class="dropdown-toggle">Избранное</a>
+                    </li>
+                    <li>
+                        <a href="Проект ЦУ/pages/translator.html" class="dropdown-toggle">Переводчик</a>
+                    </li>
+                    <li>
+                        <a href="Проект%20ЦУ/pages/search.html" class="dropdown-toggle">Поиск</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Проект ЦУ/pages/WordQuiz.html">Угадай перевод</a></li>
+                            <li><a href="Проект ЦУ/pages/ImageQuiz.html">Угадай на слух</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="wordle-master/start.html" class="dropdown-toggle">Сүз боткасы</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="progress-container">
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <h3>Прогресс изучения слов</h3>
+                        <span id="words-progress-value">0/0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="words-progress-bar" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <h3>Прогресс квизов</h3>
+                        <span id="quizzes-progress-value">0/0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="quizzes-progress-bar" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="section-title">Основные разделы</h2>
+            <div class="main-grid">
+                <!-- Основные разделы -->
+                <a href="Проект ЦУ/pages/wordLearning.html" class="section-card">
+                    <div class="card-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Тренировка произношения</h3>
+                    <p class="card-desc">Изучайте новые слова с правильным произношением и переводом</p>
+                </a>
+
+                <a href="Проект ЦУ/pages/favorites.html" class="section-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Избранное</h3>
+                    <p class="card-desc">Ваша коллекция сохраненных слов для повторения</p>
+                </a>
+
+                <a href="Проект ЦУ/pages/translator.html" class="section-card">
+                    <div class="card-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 0 1 6.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Переводчик</h3>
+                    <p class="card-desc">Переводите текст между русским и татарским языками</p>
+                </a>
+            </div>
+
+            <h2 class="section-title">Проверка знаний</h2>
+            <div class="main-grid">
+                <a href="Проект ЦУ/pages/WordQuiz.html" class="section-card">
+                    <div class="card-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 9l4-4 4 4"></path>
+                            <path d="M16 15l-4 4-4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Угадай перевод</h3>
+                    <p class="card-desc">Выберите правильный перевод слова</p>
+                </a>
+                <a href="Проект ЦУ/pages/ImageQuiz.html" class="section-card">
+                    <div class="card-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 9l4-4 4 4"></path>
+                            <path d="M16 15l-4 4-4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Угадай на слух</h3>
+                    <p class="card-desc">Выберите правильное слово</p>
+                </a>
+            </div>
+
+            <h2 class="section-title">Наши игры</h2>
+            <div class="main-grid">
+                <a href="wordle-master/start.html" class="section-card">
+                    <div class="card-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Сүз боткасы</h3>
+                    <p class="card-desc">Угадай слово дня</p>
+                </a>
+            </div>
+        </main>
+        <script src = "Проект%20ЦУ/js/toggle.js"></script>
+        <script src="Проект%20ЦУ/js/progress.js"></script>
+    </div>
+</body>
+
+</html>

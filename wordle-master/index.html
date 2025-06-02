@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tt">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сүз боткасы</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header__div">
+        <div class="right-icons">
+            <img src="pixil-frame-0 (5).png" alt="" class="dictionary"/>
+            <img src="pixil-frame-0 (5).png" alt="" class="dictionary2"/>
+        </div>
+      <a href="start.html" class="header_title"><h1>Сүз боткасы</h1></a>
+      <div class="right-icons">
+        <img src="pixil-frame-0 (1).png" alt="" id="open-modal-btn" class="question"/>
+        <div class="modal" id="my-modal">
+                    <div class="modal__box">
+                        <button class="modal__close-btn" id="close-my-modal-btn">X</button>
+
+                        <h2>Кагыйдәләр</h2>
+                        <p>"Сүз боткасы" уенындагы серле сүзне алты омтылыштан табыгыз.</p>
+                        <p>1. Һәр омтылыштан соң серле сүздә нинди хәрефләр булуын күрсәтү өчен хәрефләрнең төсе үзгәрәчәк! Мәсәлән, без БЕРГӘ сүзен табырга тырышабыз һәм Әкият сүзен кертәбез:</p>
+                        <img src="yellow2.jpg" alt="">
+                        <p>Ә хәрефе серле сүздә бар, ләкин икенче урында тора. Әгәр хәрефләр серле сүздә булмаса, ул соры төс белән аерылып чыга.</p>
+                        <p>2. Аннары Бүлмә сүзен кертәбез. Б һәм Ә хәрефләре серле сүздә бар һәм дөрес урыннарда тора.</p>
+                        <img src="green2.jpg" alt="" height="80px" width="430px">
+                        <p>3. Әгәр дә сүз дөрес әйтелсә, хәрефләр яшел булачак!</p>
+                        <img src="full.jpg" alt="" height="80px" width="430px">
+                        <img src="" alt="">
+                        <p>КОТЛЫЙМ, сез 6 омтылыштан да кимрәк вакыт узгач җиңдегез.</p>
+
+            
+                    </div>
+                </div>
+        <img src="pixil-frame-0 (4).png" alt="" class="stats"/>
+      </div>
+
+    </div>
+
+  </header>
+
+  <div class="dict_popup__bg">
+      <form class="dict_popup">
+          <span class="dict_close__popup">x</span>
+          <h2 class="dict_popup__title">Сайланган сүзләр сүзлеге</h2>
+          <p class="no_words">Сайланган сүзләр юк</p>
+          <div class="dict_container"></div>
+      </form>
+  </div>
+
+  <main>
+    <section id="board">
+    </section>
+  </main>
+  <div class="toaster">
+    <ul></ul>
+  </div>
+  <footer>
+    <section id="keyboard">
+    </section>
+  </footer>
+  <div class="popup__bg">
+    <form class="popup">
+      <span class="close__popup">x</span>
+      <div class="loader"></div>
+      <div class="container">
+        <h2 class="popup__title">Статистика</h2>
+        <div class="statistic_container">
+          <div class="statistic_element">
+            <div class="statistic_value"></div>
+            <div class="statistic_name">Табынган сүзләр</div>
+          </div>
+          <div class="statistic_element">
+            <div class="statistic_value"></div>
+            <div class="statistic_name">Җиңү проценты</div>
+          </div>
+          <div class="statistic_element">
+            <div class="statistic_value"></div>
+            <div class="statistic_name">Җиңүләр сериясе</div>
+          </div>
+          <div class="statistic_element">
+            <div class="statistic_value"></div>
+            <div class="statistic_name">Җиңүләрнең иң яхшы сериясе</div>
+          </div>
+        </div>
+          <div class="right-word-container">
+              <p class="right-word-title">Серле сүз:</p>
+              <p class="right-word" id="word">Сүз - тәрҗемә</p>
+          </div>
+        <div class="button__add"><span class="button__add-text">Сайланганга өстәү</span></div>
+          <div class="button__restart"><span class="button__restart-text">Яңадан</span></div>
+      </div>
+    </form>
+  </div>
+  <script type="text/javascript" src="index.js"></script>
+</body>
+</html>

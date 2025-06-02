@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Татарский Wordle</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon">
+    <style>
+        /* Дополнительные стили для Wordle */
+        .wordle-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .wordle-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .wordle-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .wordle-header p {
+            color: var(--gray);
+        }
+
+        .wordle-grid {
+            display: grid;
+            grid-template-rows: repeat(6, 1fr);
+            grid-gap: 5px;
+            margin: 20px 0;
+        }
+
+        .wordle-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 5px;
+        }
+
+        .wordle-tile {
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #d3d6da;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .wordle-tile[data-state="correct"] {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .wordle-tile[data-state="present"] {
+            background-color: #FFC107;
+            border-color: #FFC107;
+            color: white;
+        }
+
+        .wordle-tile[data-state="absent"] {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: white;
+        }
+
+        .wordle-keyboard {
+            margin-top: 30px;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .keyboard-key {
+            padding: 12px 0;
+            margin: 0 3px;
+            min-width: 40px;
+            border: none;
+            border-radius: 4px;
+            background-color: #d3d6da;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .keyboard-key:hover {
+            background-color: #c0c3c7;
+        }
+
+        .keyboard-key[data-state="correct"] {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .keyboard-key[data-state="present"] {
+            background-color: #FFC107;
+            color: white;
+        }
+
+        .keyboard-key[data-state="absent"] {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .keyboard-key.wide {
+            min-width: 60px;
+            font-size: 0.8rem;
+        }
+
+        .wordle-message {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .wordle-message.correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .wordle-message.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .wordle-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .wordle-tile {
+                font-size: 1.5rem;
+            }
+
+            .keyboard-key {
+                min-width: 30px;
+                padding: 10px 0;
+                font-size: 0.9rem;
+            }
+
+            .keyboard-key.wide {
+                min-width: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(102193999, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/102193999" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<div class="container">
+    <header>
+        <a href="../../index.html" class="header_logo"><img src="../assets/logo.png" alt="" class="logo"><h1>oyLash</h1></a>
+        <div class="burger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav>
+            <ul class="main-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Обучение<svg width="12" height="12" viewBox="0 0 24 24"
+                                                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                                     stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pages/wordLearning.html">Тренировка произношения</a></li>
+                        <li><a href="../pages/WordSpelling.html">Тренировка произношения (ручной ввод)</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../pages/favorites.html" class="dropdown-toggle">Избранное</a>
+                </li>
+                <li>
+                    <a href="../pages/translator.html" class="dropdown-toggle">Переводчик</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24"
+                                                                   fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                                   stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pages/WordQuiz.html">Угадай перевод</a></li>
+                        <li><a href="../pages/ImageQuiz.html">Угадай на слух</a></li>
+                        <li><a href="../pages/wordle.html">Татарский Wordle</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="wordle-container">
+            <div class="wordle-header">
+                <h2>Татарский Wordle</h2>
+                <p>Угадайте слово из 5 букв на татарском языке</p>
+            </div>
+
+            <div id="wordle-grid" class="wordle-grid">
+                <!-- Генерация сетки будет через JS -->
+            </div>
+
+            <div id="wordle-message" class="wordle-message" style="display: none;"></div>
+
+            <div class="wordle-actions">
+                <button id="new-game-btn" class="btn-primary">Новая игра</button>
+                <button id="hint-btn" class="btn-outline">Подсказка</button>
+            </div>
+
+            <div class="wordle-keyboard">
+                <div class="keyboard-row">
+                    <button class="keyboard-key" data-key="Ә">Ә</button>
+                    <button class="keyboard-key" data-key="Җ">Җ</button>
+                    <button class="keyboard-key" data-key="Ң">Ң</button>
+                    <button class="keyboard-key" data-key="Ө">Ө</button>
+                    <button class="keyboard-key" data-key="Ү">Ү</button>
+                    <button class="keyboard-key" data-key="Һ">Һ</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="keyboard-key" data-key="Й">Й</button>
+                    <button class="keyboard-key" data-key="Ц">Ц</button>
+                    <button class="keyboard-key" data-key="У">У</button>
+                    <button class="keyboard-key" data-key="К">К</button>
+                    <button class="keyboard-key" data-key="Е">Е</button>
+                    <button class="keyboard-key" data-key="Н">Н</button>
+                    <button class="keyboard-key" data-key="Г">Г</button>
+                    <button class="keyboard-key" data-key="Ш">Ш</button>
+                    <button class="keyboard-key" data-key="Щ">Щ</button>
+                    <button class="keyboard-key" data-key="З">З</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="keyboard-key" data-key="Ф">Ф</button>
+                    <button class="keyboard-key" data-key="Ы">Ы</button>
+                    <button class="keyboard-key" data-key="В">В</button>
+                    <button class="keyboard-key" data-key="А">А</button>
+                    <button class="keyboard-key" data-key="П">П</button>
+                    <button class="keyboard-key" data-key="Р">Р</button>
+                    <button class="keyboard-key" data-key="О">О</button>
+                    <button class="keyboard-key" data-key="Л">Л</button>
+                    <button class="keyboard-key" data-key="Д">Д</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="keyboard-key wide" data-key="Enter">ENTER</button>
+                    <button class="keyboard-key" data-key="Я">Я</button>
+                    <button class="keyboard-key" data-key="Ч">Ч</button>
+                    <button class="keyboard-key" data-key="С">С</button>
+                    <button class="keyboard-key" data-key="М">М</button>
+                    <button class="keyboard-key" data-key="И">И</button>
+                    <button class="keyboard-key" data-key="Т">Т</button>
+                    <button class="keyboard-key" data-key="Ь">Ь</button>
+                    <button class="keyboard-key wide" data-key="Backspace">⌫</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Инициализация игры
+        const WORD_LENGTH = 5;
+        const MAX_ATTEMPTS = 6;
+        let currentRow = 0;
+        let currentTile = 0;
+        let gameOver = false;
+        let wordOfTheDay = '';
+
+        // Список слов на татарском (5 букв)
+        const words = [
+            "авыл", "агач", "акыл", "алма", "атлы",
+            "баллы", "балык", "битле", "болыт", "борын",
+            "гаилә", "гөмбә", "дәүләт", "диңгез", "егет",
+            "җиләк", "җирле", "җылы", "игътибар", "илле",
+            "көзге", "күлчәк", "күңел", "матур", "мичкә",
+            "нәрсә", "очрак", "өйрән", "рәсем", "сабын",
+            "салкын", "сөйлә", "тавыш", "тәмле", "төнге",
+            "уенчы", "уллы", "үзәк", "халык", "чишмә",
+            "шатлык", "шәһәр", "ялкын", "яңа", "яшь"
+        ];
+
+        // Фильтруем слова по длине 5 букв
+        const fiveLetterWords = words.filter(word => word.length === 5);
+
+        // Инициализация сетки
+        const wordleGrid = document.getElementById('wordle-grid');
+        for (let i = 0; i < MAX_ATTEMPTS; i++) {
+            const row = document.createElement('div');
+            row.className = 'wordle-row';
+
+            for (let j = 0; j < WORD_LENGTH; j++) {
+                const tile = document.createElement('div');
+                tile.className = 'wordle-tile';
+                tile.dataset.state = 'empty';
+                row.appendChild(tile);
+            }
+
+            wordleGrid.appendChild(row);
+        }
+
+        // Инициализация клавиатуры
+        const keyboardKeys = document.querySelectorAll('.keyboard-key');
+        keyboardKeys.forEach(key => {
+            key.addEventListener('click', () => handleKeyPress(key.dataset.key));
+        });
+
+        // Обработка нажатий клавиш
+        document.addEventListener('keydown', (e) => {
+            if (gameOver) return;
+
+            if (e.key === 'Enter') {
+                handleKeyPress('Enter');
+            } else if (e.key === 'Backspace') {
+                handleKeyPress('Backspace');
+            } else if (/^[а-яәөүҗңһА-ЯӘӨҮҖҢҺ]$/.test(e.key)) {
+                handleKeyPress(e.key.toUpperCase());
+            }
+        });
+
+        // Новая игра
+        document.getElementById('new-game-btn').addEventListener('click', startNewGame);
+
+        // Подсказка
+        document.getElementById('hint-btn').addEventListener('click', showHint);
+
+        // Начать новую игру
+        function startNewGame() {
+            // Выбираем случайное слово
+            wordOfTheDay = fiveLetterWords[Math.floor(Math.random() * fiveLetterWords.length)].toUpperCase();
+            console.log('Загаданное слово:', wordOfTheDay); // Для отладки
+
+            // Сброс состояния игры
+            currentRow = 0;
+            currentTile = 0;
+            gameOver = false;
+
+            // Очистка сетки
+            const tiles = document.querySelectorAll('.wordle-tile');
+            tiles.forEach(tile => {
+                tile.textContent = '';
+                tile.dataset.state = 'empty';
+                tile.style.backgroundColor = '';
+                tile.style.borderColor = '';
+            });
+
+            // Очистка клавиатуры
+            keyboardKeys.forEach(key => {
+                key.dataset.state = '';
+                key.style.backgroundColor = '';
+                key.style.color = '';
+            });
+
+            // Скрыть сообщение
+            const message = document.getElementById('wordle-message');
+            message.style.display = 'none';
+            message.className = 'wordle-message';
+        }
+
+        // Обработка нажатия клавиши
+        function handleKeyPress(key) {
+            if (gameOver) return;
+
+            const rows = document.querySelectorAll('.wordle-row');
+            const currentRowTiles = rows[currentRow].querySelectorAll('.wordle-tile');
+
+            if (key === 'Enter' && currentTile === WORD_LENGTH) {
+                checkGuess(rows[currentRow]);
+            } else if (key === 'Backspace' && currentTile > 0) {
+                currentTile--;
+                currentRowTiles[currentTile].textContent = '';
+                currentRowTiles[currentTile].dataset.state = 'empty';
+            } else if (key !== 'Enter' && key !== 'Backspace' && currentTile < WORD_LENGTH) {
+                currentRowTiles[currentTile].textContent = key;
+                currentRowTiles[currentTile].dataset.state = 'filled';
+                currentTile++;
+            }
+        }
+
+        // Проверка предположения
+        function checkGuess(row) {
+            const tiles = row.querySelectorAll('.wordle-tile');
+            let guess = '';
+
+            // Собираем слово из букв
+            tiles.forEach(tile => {
+                guess += tile.textContent;
+            });
+
+            // Проверяем, есть ли слово в списке
+            if (!fiveLetterWords.includes(guess.toLowerCase())) {
+                showMessage('Слово не найдено в словаре!', 'incorrect');
+                return;
+            }
+
+            // Проверяем буквы
+            const letterCount = {};
+
+            // Считаем количество каждой буквы в загаданном слове
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                const letter = wordOfTheDay[i];
+                letterCount[letter] = (letterCount[letter] || 0) + 1;
+            }
+
+            // Сначала отмечаем правильные позиции
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                const tile = tiles[i];
+                const letter = tile.textContent;
+
+                if (letter === wordOfTheDay[i]) {
+                    tile.dataset.state = 'correct';
+                    letterCount[letter]--;
+
+                    // Обновляем клавиатуру
+                    updateKeyboardKey(letter, 'correct');
+                }
+            }
+
+            // Затем отмечаем присутствующие буквы
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                const tile = tiles[i];
+                const letter = tile.textContent;
+
+                if (tile.dataset.state !== 'correct') {
+                    if (wordOfTheDay.includes(letter) && letterCount[letter] > 0) {
+                        tile.dataset.state = 'present';
+                        letterCount[letter]--;
+
+                        // Обновляем клавиатуру (только если не было correct)
+                        const key = document.querySelector(`.keyboard-key[data-key="${letter}"]`);
+                        if (key.dataset.state !== 'correct') {
+                            updateKeyboardKey(letter, 'present');
+                        }
+                    } else {
+                        tile.dataset.state = 'absent';
+
+                        // Обновляем клавиатуру (только если не было correct или present)
+                        const key = document.querySelector(`.keyboard-key[data-key="${letter}"]`);
+                        if (key.dataset.state !== 'correct' && key.dataset.state !== 'present') {
+                            updateKeyboardKey(letter, 'absent');
+                        }
+                    }
+                }
+            }
+
+            // Проверяем победу
+            if (guess === wordOfTheDay) {
+                gameOver = true;
+                showMessage('Поздравляем! Вы угадали слово!', 'correct');
+                return;
+            }
+
+            // Переход к следующей строке
+            currentRow++;
+            currentTile = 0;
+
+            // Проверяем окончание игры
+            if (currentRow === MAX_ATTEMPTS) {
+                gameOver = true;
+                showMessage(`Игра окончена! Загаданное слово: ${wordOfTheDay}`, 'incorrect');
+            }
+        }
+
+        // Обновление состояния клавиши на клавиатуре
+        function updateKeyboardKey(letter, state) {
+            const key = document.querySelector(`.keyboard-key[data-key="${letter}"]`);
+            if (key && (!key.dataset.state || state === 'correct' ||
+                (state === 'present' && key.dataset.state !== 'correct'))) {
+                key.dataset.state = state;
+            }
+        }
+
+        // Показать сообщение
+        function showMessage(text, type) {
+            const message = document.getElementById('wordle-message');
+            message.textContent = text;
+            message.className = `wordle-message ${type}`;
+            message.style.display = 'block';
+        }
+
+        // Показать подсказку
+        function showHint() {
+            if (gameOver || !wordOfTheDay) return;
+
+            // Показываем случайную букву из загаданного слова
+            const hiddenLetters = [];
+            const rows = document.querySelectorAll('.wordle-row');
+            const currentRowTiles = rows[currentRow].querySelectorAll('.wordle-tile');
+
+            // Проверяем, какие буквы уже открыты
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                if (currentRowTiles[i].textContent === '') {
+                    hiddenLetters.push(i);
+                }
+            }
+
+            if (hiddenLetters.length > 0) {
+                const randomIndex = hiddenLetters[Math.floor(Math.random() * hiddenLetters.length)];
+                currentRowTiles[randomIndex].textContent = wordOfTheDay[randomIndex];
+                currentRowTiles[randomIndex].dataset.state = 'hint';
+                currentTile = WORD_LENGTH; // Автоматически заполняем строку
+            }
+        }
+
+        // Начинаем новую игру при загрузке
+        startNewGame();
+    });
+</script>
+<script src="../js/toggle.js"></script>
+</body>
+</html>

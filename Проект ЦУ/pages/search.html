@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Поиск слов</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon">
+</head>
+<body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(102193999, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/102193999" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<header>
+    <a href="../../index.html" class="header_logo"><img src="../assets/logo.png" alt="" class="logo"><h1>oyLash</h1></a>
+    <div class="burger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav>
+        <ul class="main-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Обучение<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="./wordLearning.html">Тренировка произношения</a></li>
+                    <li><a href="./WordSpelling.html">Тренировка произношения (ручной ввод)</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="./favorites.html" class="dropdown-toggle">Избранное</a>
+            </li>
+            <li>
+                <a href="./translator.html" class="dropdown-toggle">Переводчик</a>
+            </li>
+            <li>
+                <a href="./search.html" class="dropdown-toggle">Поиск</a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="./WordQuiz.html">Угадай перевод</a></li>
+                    <li><a href="./ImageQuiz.html">Угадай на слух</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../../wordle-master/start.html" class="dropdown-toggle">Сүз боткасы</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="main-container main-search">
+    <main>
+        <div class="search-container">
+            <h2>Поиск слов</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Введите слово на татарском или русском..." >
+                <button id="searchBtn">Найти</button>
+            </div>
+
+            <div id="searchResults" class="search-results">
+                <!-- Результаты будут отображаться здесь -->
+            </div>
+        </div>
+    </main>
+</div>
+<script src="../js/toggle.js"></script>
+<script src="../js/search.js"></script>
+</body>
+</html>

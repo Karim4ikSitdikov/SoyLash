@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyLash - Угадай перевод</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .question-container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .word-display {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .option-btn {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .option-btn.correct {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .option-btn.incorrect {
+            background-color: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .progress-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .result-container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .result-score {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            font-size: 18px;
+        }
+
+        .next-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .next-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .restart-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .restart-btn:hover {
+            background-color: #4a6fa5;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(102193999, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/102193999" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    <div class="container">
+        <header>
+            <a href="../../index.html" class="header_logo"><img src="../assets/logo.png" alt="" class="logo"><h1>oyLash</h1></a>
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Обучение<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./wordLearning.html">Тренировка произношения</a></li>
+                            <li><a href="./WordSpelling.html">Тренировка произношения (ручной ввод)</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="./favorites.html" class="dropdown-toggle">Избранное</a>
+                    </li>
+                    <li>
+                        <a href="./translator.html" class="dropdown-toggle">Переводчик</a>
+                    </li>
+                    <li>
+                        <a href="./search.html" class="dropdown-toggle">Поиск</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./WordQuiz.html">Угадай перевод</a></li>
+                            <li><a href="./ImageQuiz.html">Угадай на слух</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../../wordle-master/start.html" class="dropdown-toggle">Сүз боткасы</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="quiz-container">
+                <div class="progress-info">
+                    Вопрос <span id="current-question">1</span> из 10
+                </div>
+
+                <div class="question-container">
+                    <div class="word-display" id="word-display"></div>
+                    <div class="options-container" id="options-container"></div>
+                </div>
+
+                <button class="next-btn" id="next-btn" style="display: none;">Следующий вопрос</button>
+
+                <div class="result-container" id="result-container">
+                    <div class="result-title">Квиз завершен!</div>
+                    <div class="result-score">Ваш результат: <span id="final-score">0</span>/10</div>
+                    <div class="result-message" id="result-message"></div>
+                    <button class="restart-btn" id="restart-btn">Начать заново</button>
+                </div>
+            </div>
+        </main>
+
+    </div>
+    <script src="../js/toggle.js"></script>
+    <script src="../js/WordQuiz.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SoyLash - Избранные слова</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon">
+</head>
+<body>
+<header>
+    <a href="../../index.html" class="header_logo"><img src="../assets/logo.png" alt="" class="logo"><h1>oyLash</h1></a>
+    <div class="burger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav>
+        <ul class="main-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Обучение<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="./wordLearning.html">Тренировка произношения</a></li>
+                    <li><a href="./WordSpelling.html">Тренировка произношения (ручной ввод)</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="./favorites.html" class="dropdown-toggle">Избранное</a>
+            </li>
+            <li>
+                <a href="./translator.html" class="dropdown-toggle">Переводчик</a>
+            </li>
+            <li>
+                <a href="./search.html" class="dropdown-toggle">Поиск</a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Квизы <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="./WordQuiz.html">Угадай перевод</a></li>
+                    <li><a href="./ImageQuiz.html">Угадай на слух</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../../wordle-master/start.html" class="dropdown-toggle">Сүз боткасы</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main class="main-container">
+    <div class="favorites-container">
+        <!-- Блок фильтров с кнопкой для мобильных -->
+        <aside class="filters-section">
+<!--            <button class="mobile-filter-toggle" id="filterToggle">Фильтры ▼</button>-->
+            <div class="filters" id="filtersContainer">
+                <h2>Фильтры</h2>
+                <ul class="theme-filter" id="theme-filters">
+                    <li><button class="active" data-theme="all">Все темы</button></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Основной контент -->
+        <section class="favorites-section">
+            <div class="favorites-header">
+                <h2>Избранные слова</h2>
+                <span class="favorites-count">0 слов</span>
+            </div>
+
+            <div id="favorites-list" class="favorites-grid">
+                <!-- Карточки избранных слов -->
+            </div>
+
+            <!-- Сообщение для пустого списка -->
+            <div id="empty-favorites" class="empty-favorites" style="display: none;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path>
+                </svg>
+                <h3>Нет избранных слов</h3>
+                <p>Добавляйте слова в избранное, нажимая на ♡</p>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="../js/toggle.js"></script>
+<script src="../js/favorites.js"></script>
+</body>
+</html>
