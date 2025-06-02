@@ -122,5 +122,5 @@ document.addEventListener('DOMContentLoaded', async () => {
             const results = searchWords(query);
             displaySearchResults(results);
         }
-    });
+    })
 });

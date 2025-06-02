@@ -160,7 +160,7 @@ async function speakCurrentWord() {
     speakBtn.innerHTML = 'Озвучивание...';
 
     try {
-        const response = await fetch('http://localhost:5002/synthesize', {
+        const response = await fetch('http://95.183.13.188:5002/synthesize', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: currentWord.word })
@@ -231,7 +231,7 @@ checkBtn.addEventListener('click', async function () {
         formData.append('text', currentWord.word);
         formData.append('audio', userAudioBlob, 'recording.wav');
 
-        const response = await fetch('http://localhost:5003/check_pronunciation', {
+        const response = await fetch('http://95.183.13.188:5003/check_pronunciation', {
             method: 'POST',
             body: formData
         });

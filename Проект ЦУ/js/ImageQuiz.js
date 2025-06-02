@@ -102,7 +102,7 @@ async function pronounceWord() {
     pronounceBtn.innerHTML = 'Озвучивание...';
 
     try {
-        const response = await fetch('http://localhost:5002/synthesize', {
+        const response = await fetch('http://95.183.13.188:5002/synthesize', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: currentCorrectWord.word })
